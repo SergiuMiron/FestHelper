@@ -1,0 +1,97 @@
+@import "../../config/_theme.scss";
+
+.form-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-group-price {
+    margin-bottom: 40px;
+  }
+
+.align-right {
+    text-align: right;
+}
+
+.page-header {
+    margin-bottom: 40px;
+  
+    i {
+      @extend %icon-primary-color;
+    }
+  
+    .page-title {
+      @extend %primary-label-style;
+      display: inline-block;
+      vertical-align: middle;
+      text-transform: uppercase;
+      font-size: 16px;
+    }
+  }
+
+ .required:after { content: " *";
+                   color: #FF0000 }
+
+.container-add {
+    width: 724px;
+    margin: 60px auto;
+}
+
+.timeline-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+
+    .timeline-title {
+        margin: 0;
+        padding: 0;
+        display: inline-block;
+        margin-bottom: 14px;
+
+        .timeline-span {
+        @extend %primary-style;
+        font-weight: bold;
+        font-size: 18px;
+        color: #000000;
+
+        display: flex;
+        justify-content: space-between;
+        }
+
+    }
+
+    .location-details,
+    {
+        display: flex;
+        justify-content: space-between;
+
+        &:first-child {
+            padding: 0;
+        }
+    }
+}
+
+.upload-image-section {
+    margin-bottom: 50px;
+}
+
+.react-tel-input {
+    margin-bottom: 50px;
+
+    .form-group-input {
+        width: 100%;
+        height: 38px;
+        border-radius: 3px;
+        border: solid 1px #9b9b9b;
+        background-color: #ffffff;
+        margin: 0 auto;
+        font-size: 16px;
+        font-weight: 500;
+        color: #4a4a4a;
+        padding: 10px;
+      }
+}
+
+#descriptionId {
+    margin-bottom: 50px;
+}

@@ -1,0 +1,99 @@
+@import '../../config//theme';
+
+.navbar {
+    padding: 0 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    border-bottom: solid 2px rgba(100,102,109,0.2);
+
+    .login-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 0 0;
+
+        .fa-user-circle {
+            font-size: 40px;
+            color: $primary-color;
+        }
+
+        .fa-sign-out-alt {
+            margin-left: 10px;
+            color: $primary-color;
+            cursor: pointer;
+        }
+
+        div {
+            margin-left: 10px;
+            font-weight: bold;
+            color: #000000;
+            font-family: 'Roboto';
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+    }
+
+
+    .navbar-logo {
+        width: 100px;
+    }
+
+    .navbar-right-side {
+        padding: 33px 0 0;
+        top: 2px;
+        // align-self: flex-end;
+
+        .navbar__list {
+            list-style-type: none;
+            position: relative;
+            margin: 0;
+        }
+
+        .navbar__item {
+            display: inline-block;
+            padding-right: 38px;
+            vertical-align: middle;
+        
+            &:last-of-type {
+                padding-right: 0;
+            }
+        }
+
+        .navbar__link {
+            text-decoration: none;
+            position: relative;
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            text-transform: uppercase;
+            font-weight: bold;
+            color: #000000;
+            padding-bottom: 17px;
+            display: block;
+            transition: color ease-in-out 0.2s;
+        
+            &:hover, &.navbar__link--is-active {
+                text-decoration: none;
+                color: $primary-color;
+        
+                &:after {
+                    height: 4px;
+                    background-color: $primary-color;
+                }
+            }
+        
+            &:after {
+                content: '';
+                display: block;
+                position: absolute;
+                left: 0;
+                bottom: -20px;
+                height: 0px;
+                width: 100%;
+                background-color: transparent;
+                transition: background-color ease-in-out 0.2s, height ease-in-out 0.2s;
+            }
+        }
+    }
+}
