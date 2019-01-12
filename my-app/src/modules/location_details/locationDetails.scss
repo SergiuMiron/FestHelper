@@ -1,0 +1,16 @@
+.col-md-pull-6 {
+    width: 1220px;
+    margin: 0 auto;
+    margin-top: 5%;
+
+    img {
+        width: 75vh;
+        height: 40vh;
+    }
+
+    .container-phone-number {
+        width: 50%;
+        display: flex;
+        justify-content: space-evenly;
+    }
+}

@@ -68,9 +68,14 @@ class Locations extends Component {
         
     }
 
+    queryParamsForExcludingPicturesFields () {
+        return `${locations}?$select[]=name&$select[]=city&$select[]=price&$select[]=phone&$select[]=startLocation&$select[]=endLocation`;
+    }
+
     componentWillMount() {
         this.update();
-        getLocations(locations, data => {
+        const url = this.queryParamsForExcludingPicturesFields();
+        getLocations(url, data => {
             this.setState({
               body: data,
             });

@@ -5,7 +5,7 @@
 module.exports = function (app) {
     const mongooseClient = app.get('mongooseClient');
     const { Schema } = mongooseClient;
-    const places = new Schema({
+    const locations = new Schema({
       name: { type: String, required: true, minLength: 1, maxLength: 120 },
       city: { type: String, required: true, minLength: 1, maxLength: 120 },
       price: { type: Number, required: true, minLength: 1, maxLength: 120 },
@@ -18,6 +18,6 @@ module.exports = function (app) {
       timestamps: true
     });
   
-    return mongooseClient.model('places', places);
+    return mongooseClient.model('locations', locations);
   };
   

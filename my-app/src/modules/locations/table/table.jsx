@@ -82,7 +82,8 @@ class Table extends Component {
                     message="ARE YOU SURE YOU WANT TO DELETE THIS LOCATION?"
                     show={this.state.show}
                     handleClose={this.hideModal}
-                    handleAction={this.deleteLocation}>
+                    handleAction={this.deleteLocation}
+                    rightButtonTitle="DELETE">
                 </ConfirmationDialog>
                 <StyleTable>
                     <thead>
@@ -105,7 +106,7 @@ class Table extends Component {
                                     <Td textAlign='left'>{<Moment format="MM.DD.YYYY">{row.startLocation}</Moment>}</Td>
                                     <Td textAlign='left'>{<Moment format="MM.DD.YYYY">{row.endLocation}</Moment>}</Td>
                                     <Td textAlign="center" maxWidth='80px'>
-                                        <Link to ={"/edit-question/"+row._id}>
+                                        <Link to ={"/location-details/"+row._id}>
                                         <i className="fas fa-pencil-alt"></i>
                                         </Link>
                                         <i className="fas fa-trash" onClick={() => this.showModal(index)} ></i>

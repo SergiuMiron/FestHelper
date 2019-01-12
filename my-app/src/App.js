@@ -8,6 +8,7 @@ import Header from './common/header/header';
 import { ThemeProvider } from "styled-components";
 import Theme from './config/theme';
 import {Login} from './modules/login/login';
+import LocationDetails from './modules/location_details/locationDetails';
 
 // const feathers = require('@feathersjs/feathers');
 // const rest = require('@feathersjs/rest-client');
@@ -99,8 +100,12 @@ class App extends Component {
                         setLoggedInTrue={this.setLoggedInTrue}
                         forceUpdate={this.forceComponentToUpdate}
                       />
-              )}
-            />
+                      )}/>
+                  <Route
+                      path='/location-details/:id'
+                      render={({ match }) => (
+                        <LocationDetails match={match}></LocationDetails>
+                      )}/>
               </Switch>
             </Fragment>
          </BrowserRouter>
