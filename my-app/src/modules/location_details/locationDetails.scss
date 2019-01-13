@@ -1,16 +1,108 @@
-.col-md-pull-6 {
-    width: 1220px;
-    margin: 0 auto;
-    margin-top: 5%;
+.big-container {
+    width: 1020px;
+    // margin-bottom: 15%;
+    // margin: 0 auto;
+    // margin-top: 5%;
+    // margin-left: 25%;
+    margin: 47px auto 180px auto;
 
-    img {
-        width: 75vh;
-        height: 40vh;
-    }
-
-    .container-phone-number {
-        width: 50%;
+    .upper-container__details-page {
         display: flex;
-        justify-content: space-evenly;
+        
+
+        .left-container__details-page {
+            display: block;
+    
+            img {
+                width: 65vh;
+                height: 50vh;
+                padding:1px;
+                border:1px solid #021a40;
+                background-color:darkgrey;
+            }
+    
+            .container-phone-number {
+                display: flex;
+                justify-content: center;
+                margin-top: 5%;
+                border-bottom: 1px solid rgba(0,0,0,.15);
+        
+                .fa-phone {
+                    font-size: 35px;
+                    color: #00008B;
+                    padding-top: 7px;
+                }
+        
+                .phone-number-block {
+                    display: grid;
+                    margin-left: 30px;
+                    font-size: 17px;
+                    padding-bottom: 30px;
+        
+                    :first-child {
+                        letter-spacing: 1px;
+                    }
+        
+                    :last-child {
+                        font-family: Roboto;
+                        color: darkgrey;
+                    }
+                }
+            }
+        }
+    
+        .right-container__details-page {
+            margin-left: 5%;
+    
+            .details-location {
+                font-family: Roboto;
+                font-size: 20px;
+                font-weight: bold;
+                margin-top: 35px;
+            }
+    
+            .price{
+    
+                span {
+                    font-family: normal;
+                    font-weight: normal;
+                    color: darkgrey;
+                    margin-left: 5px;
+                }
+            }
+            
+            .city {
+                margin-top: 5px;
+                font-size:20px;
+            }
+            
+            time {
+                font-size: 20px;
+            }
+            
+        }
     }
+
+    .bottom-container__details-page {
+        display: flex;
+
+        .details-location {
+            font-family: Roboto;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 35px;
+
+            .description-content {
+            font-family: 'Open Sans';
+            font-weight: normal;
+            font-size: 17px;
+           }
+        }
+    }
+
+}
+
+.details-location-button {
+    text-align: right;
+    margin-top: 10%;
 }
