@@ -53,7 +53,7 @@ class Header extends Component {
                     <img
                     className="navbar-logo"
                     alt="Logo"
-                    src="/assets/wix.jpg"
+                    src="/assets/wix.jpg" 
                     />
                </Link>
 

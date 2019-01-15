@@ -67,7 +67,7 @@ class HeaderTable extends Component {
                         
                     </DivBtnDropDown>
                     <DivButton >
-                        <Link to ={"/create-question"}>
+                        <Link to ={"/add-a-location"}>
                            <Button size='Medium' textTransform='capitalize' title='+ Create a New Location' action= { this.setRedirect }></Button>
                         </Link>
                     </DivButton>

@@ -4,6 +4,7 @@ const settings = require('./settings/settings.service.js');
 const tests = require('./tests/tests.service.js');
 const locations = require('./locations/locations.service.js')
 const users = require('./users/users.service.js');
+const wishlist = require('./wishlist/wishlist.service.js');
 // eslint-disable-next-line no-unused-vars
 module.exports = function (app) {
   app.configure(campaigns);
@@ -12,4 +13,5 @@ module.exports = function (app) {
   app.configure(tests);
   app.configure(locations);
   app.configure(users);
+  app.configure(wishlist);
 };

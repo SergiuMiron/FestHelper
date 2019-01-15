@@ -22,7 +22,7 @@ module.exports = function (app) {
     query: {
       $select: [ 'name','city','price','phone','startLocation','endLocation']
     }
-  })
+  });
 
   service.hooks(hooks);
 };

@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { getLocations } from '../locations/apiCalls';
-import { locations } from '../../endpoints';
+import { locations,wishlist } from '../../endpoints';
 import { Grid,Col,Image,Row } from 'react-bootstrap';
 import Moment from 'react-moment';
 import Button  from '../../common/button/button';
+import { postLocationToWishlist } from './apiCall';
+import defaultWishlistLocation from './defaultWishlistLocation';
 import './locationDetails.scss';
 
 class LocationDetails extends Component {
@@ -38,6 +40,31 @@ class LocationDetails extends Component {
                 })
             })
         }
+    }
+
+    createWishlistObject = () => {
+        let newWishlistLocation = {}
+
+        for ( let { id: inputId, type: inputType } of defaultWishlistLocation ) {
+          let stateName = inputId;
+          newWishlistLocation[inputId] = new inputType(this.state[stateName]);
+        }
+
+        this.state.pictures.length > 0 ? 
+        newWishlistLocation["pictures"] = this.state.pictures[0].base64 
+                    : newWishlistLocation["pictures"] = "";
+                    newWishlistLocation["description"] = this.state.description;
+        newWishlistLocation["username"] = localStorage.getItem('username');
+        console.log("tot", newWishlistLocation)
+        return newWishlistLocation;
+      }
+
+
+    addToWishlist = () => {
+        const objectToAdd = this.createWishlistObject();
+       postLocationToWishlist(wishlist, objectToAdd, (response) => {
+           console.log("a mers?");
+       })
     }
 
     render() {
