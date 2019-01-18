@@ -8,7 +8,7 @@ import "./header.scss"
 const navbarItems = [
     { href: "/locations", text: "Locations" },
     { href: "/add-a-location", text: "New Location" },
-    // { href: "/home", text: "Page3" },
+    { href: "/wishlist", text: "My wishlist" },
     // { href: "/home", text: "Page4" }
   ];
 

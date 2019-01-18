@@ -9,40 +9,7 @@ import { ThemeProvider } from "styled-components";
 import Theme from './config/theme';
 import {Login} from './modules/login/login';
 import LocationDetails from './modules/location_details/locationDetails';
-
-// const feathers = require('@feathersjs/feathers');
-// const rest = require('@feathersjs/rest-client');
-// const auth = require('@feathersjs/authentication-client');
-
-// const superagent = require('superagent');
-// const localStorage = require('localstorage-memory');
-
-// const feathersClient = feathers();
-
-// feathersClient.configure(rest('http://localhost:8081').superagent(superagent))
-//   .configure(auth({ storage: localStorage }));
-
-//   feathersClient.authenticate({
-//     strategy: 'local',
-//     email: 'myemail',
-//     password: 'mypassword'
-//   })
-//   .then(response => {
-//     console.log('Authenticated!', response);
-//     return feathersClient.passport.verifyJWT(response.accessToken);
-//   })
-//   .then(payload => {
-//     console.log('JWT Payload', payload);
-//     return feathersClient.service('users').get(payload.userId);
-//   })
-//   .then(user => {
-//     feathersClient.set('user', user);
-//     console.log('User', feathersClient.get('user'));
-//   })
-//   .catch(function(error){
-//     console.error('Error authenticating!', error);
-//   });
-
+import Wishlist from './modules/wishlist/wishlist';
 
 class App extends Component {
   constructor(props){
@@ -92,6 +59,7 @@ class App extends Component {
                   <Route path="/home" component={Home} />
                   <Route path="/locations" component={Locations} />
                   <Route path="/add-a-location" component={AddALocation} />
+                  <Route path="/wishlist" component={Wishlist} />
                   <Route
                     path="/login"
                     render={() => (

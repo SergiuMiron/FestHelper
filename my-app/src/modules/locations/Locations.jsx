@@ -6,7 +6,7 @@ import Table from './table/table';
 import Pagination from '../../common/pagination/pagination';
 import HeaderTable from './header-table/headerTable';
 
-const Container = styled.div`
+const Container = styled.div`       
     display: block;
     margin: 0 auto 180px auto;
     width: 1220px;
