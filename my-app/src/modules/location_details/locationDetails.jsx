@@ -55,7 +55,6 @@ class LocationDetails extends Component {
                     : newWishlistLocation["pictures"] = "";
                     newWishlistLocation["description"] = this.state.description;
         newWishlistLocation["username"] = localStorage.getItem('username');
-        console.log("tot", newWishlistLocation)
         return newWishlistLocation;
       }
 
@@ -63,7 +62,6 @@ class LocationDetails extends Component {
     addToWishlist = () => {
         const objectToAdd = this.createWishlistObject();
        postLocationToWishlist(wishlist, objectToAdd, (response) => {
-           console.log("a mers?");
        })
     }
 
@@ -116,9 +114,6 @@ class LocationDetails extends Component {
                                 title="Add to my wishlist"
                                 size="Medium"></Button>
                   </div>
-
-
-
                 </div>
 
             </Fragment>

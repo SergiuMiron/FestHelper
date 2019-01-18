@@ -1,9 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
-import Button from '../../../common/button/button';
 import ContainerHeader from '../../../common/container-header/container-header';
 import WishlistSelectBoxTabel from './wishlist-selectbox-table';
-import { Link } from 'react-router-dom';
 
 const DivFiltering = styled.div`
     display: flex;
@@ -48,7 +46,7 @@ class WishlistHeaderTable extends Component {
     render () {
         return (
             <Fragment >
-                <ContainerHeader label="ALL LOCATIONS" className="fa fa-edit" />
+                <ContainerHeader label="MY WISHLIST" className="fa fa-edit" />
                 <DivFiltering>
                     <DivBtnDropDown>
                         <DivSelectBox>
@@ -96,11 +94,6 @@ class WishlistHeaderTable extends Component {
                         </DivSelectBox>
                         
                     </DivBtnDropDown>
-                    <DivButton >
-                        <Link to ={"/add-a-location"}>
-                           <Button size='Medium' textTransform='capitalize' title='+ Create a New Location' action= { this.setRedirect }></Button>
-                        </Link>
-                    </DivButton>
                 </DivFiltering>
             </Fragment>
         )

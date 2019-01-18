@@ -27,7 +27,7 @@ class Wishlist extends Component {
 
         this.state = {
             body: [],
-            maxLocationPerPage: 3,
+            maxLocationsPerPage: 3,
             currentPage: 1,
             totalPages: '',
             filterByCity: '',
@@ -35,10 +35,95 @@ class Wishlist extends Component {
             filterByPrice: '',
             itemOfPrice: '',
             skippedLocations: 0,
+            username: localStorage.getItem('username') || ""
         }
     }
 
+    queryParams() {
+        const { username, skippedLocations, maxLocationsPerPage, key, order, filterByCity, filterByPrice, itemOfCity, itemOfPrice} = this.state;
+        return `${wishlist}?username=${username}&$skip=${skippedLocations}&$limit=${maxLocationsPerPage}${key !== '' ? `&$sort[${key}]=${order}` : ''}${filterByCity !== '' ? `&${filterByCity}=${itemOfCity}`: ''}${filterByPrice !== '' ? `&${filterByPrice}=${itemOfPrice}`: ''}`
+    }
+
+    update = () => {
+        const url = this.queryParams();
+        
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+            this.setState({
+                body: data.data,
+                totalPages: Math.ceil(data.total / this.state.maxLocationsPerPage)
+            });
+            })
+            .catch(function (error) {
+            });   
+    }
+
+    changePage = (noOfSkippedLocations, newCurrentPage) => {
+        this.setState({
+          skippedLocations: noOfSkippedLocations,
+          currentPage: newCurrentPage
+        }, () => {
+          this.update();
+        })
+    }
+
+    queryParamsForExcludingPicturesFields () {
+         return `${wishlist}?username=${this.state.username}&$select[]=name&$select[]=city&$select[]=price&$select[]=phone&$select[]=startLocation&$select[]=endLocation`;
+    }
+
+    componentWillMount() {
+        this.update();
+        const url = this.queryParamsForExcludingPicturesFields();
+        getLocations(url, data => {
+            this.setState({
+              body: data,
+            });
+          });
+    }
+
+    filterPageCity = (filterDropDown, selectedItem) => {
+        selectedItem === 'all'
+        ?  this.setState({
+              filterByCity: '',
+              itemOfCity: '',
+              currentPage: 1,
+              skippedLocations: 0
+          }, () => {
+              this.update();
+          })
+        : this.setState({
+          filterByCity: filterDropDown,
+          itemOfCity: selectedItem,
+          currentPage: 1,
+          skippedLocations: 0
+        }, () => {
+            this.update();
+        })
+    }
+
+    filterPagePrice = (filterDropDown, selectedItem) => {
+        selectedItem === 'all'
+        ?  this.setState({
+              filterByPrice: '',
+              itemOfPrice: '' ,
+              currentPage: 1,
+              skippedLocations: 0
+          }, () => {
+              this.update();
+          })
+        : this.setState({
+          filterByPrice: filterDropDown,
+          itemOfPrice: selectedItem,
+          currentPage: 1,
+          skippedLocations: 0 
+        }, () => {
+            this.update();
+        })
+    }
+
     render() {
+        console.log("dada", this.state.username)
         return(
             <Container>
                 <WishlistHeaderTable filterPageCity={this.filterPageCity} filterPagePrice={this.filterPagePrice}></WishlistHeaderTable>
@@ -51,6 +136,10 @@ class Wishlist extends Component {
                     updatePagination={this.update}
                     maxQuestionsPerPage={this.state.maxLocationsPerPage}
                     currentPage={this.state.currentPage} />
+                <Pagination changePage={this.changePage} 
+                            currentPage={this.state.currentPage} 
+                            totalPages={this.state.totalPages}
+                            maxLocationsPerPage={this.state.maxLocationsPerPage}/>
             </Container>
         )
     }

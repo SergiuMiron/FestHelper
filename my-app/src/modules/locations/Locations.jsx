@@ -63,9 +63,7 @@ class Locations extends Component {
             });
             })
             .catch(function (error) {
-            });
-
-        
+            });   
     }
 
     queryParamsForExcludingPicturesFields () {

@@ -70,6 +70,7 @@ class Table extends Component {
     }
 
     render() { 
+        console.log("data: ", this.props.data );
         return ( 
             <Fragment>
                  {this.state.popup ? 
