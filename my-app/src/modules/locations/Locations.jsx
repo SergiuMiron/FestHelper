@@ -8,8 +8,9 @@ import HeaderTable from './header-table/headerTable';
 
 const Container = styled.div`       
     display: block;
-    margin: 0 auto 180px auto;
-    width: 1220px;
+    // margin: 0 auto 180px auto;
+    margin: auto;
+    width: 80%;
     `;
 
 const headings = {
@@ -76,6 +77,7 @@ class Locations extends Component {
         getLocations(url, data => {
             this.setState({
               body: data,
+              
             });
           });
     }

@@ -85,6 +85,7 @@ class Pagination extends Component {
     }
 
     render() {
+        console.log("Max locations " , this.props.maxLocationsPerPage)
         const { totalPages, currentPage } = this.props;
         return (
                 <ComponentWrapper>

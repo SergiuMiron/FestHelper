@@ -1,7 +1,7 @@
 @import '../../config//theme';
 
 .navbar {
-    padding: 0 75px;
+    padding: 0 6%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -12,7 +12,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 15px 50px 0;
+        // padding: 15px 50px 0;
 
         .fa-user-circle {
             font-size: 40px;
@@ -41,11 +41,13 @@
     }
 
     .navbar-right-side {
-        padding: 33px 0 0;
+        padding: 18px 0 0;
         top: 2px;
         // align-self: flex-end;
 
         .navbar__list {
+            display: flex;
+            align-items: center;
             list-style-type: none;
             position: relative;
             margin: 0;
@@ -88,7 +90,7 @@
                 display: block;
                 position: absolute;
                 left: 0;
-                bottom: -14px;
+                bottom: -20px;
                 height: 0px;
                 width: 100%;
                 background-color: transparent;

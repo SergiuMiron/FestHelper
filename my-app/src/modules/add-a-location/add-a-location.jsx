@@ -174,7 +174,6 @@ class AddALocation extends Component {
                     newLocation["pictures"] = this.state.pictures[0].base64 
                     : newLocation["pictures"] = "";
         newLocation["description"] = this.state.description;
-        console.log("tot", newLocation)
         return newLocation;
       }
 

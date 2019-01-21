@@ -123,7 +123,6 @@ class Wishlist extends Component {
     }
 
     render() {
-        console.log("dada", this.state.username)
         return(
             <Container>
                 <WishlistHeaderTable filterPageCity={this.filterPageCity} filterPagePrice={this.filterPagePrice}></WishlistHeaderTable>
