@@ -1,6 +1,7 @@
 @import '../../config//theme';
 
 .navbar {
+    white-space: nowrap;
     padding: 0 6%;
     display: flex;
     justify-content: space-between;

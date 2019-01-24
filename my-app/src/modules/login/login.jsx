@@ -178,62 +178,6 @@ class LoginBox extends React.Component {
           this.showValidationErr("username", "Username or password is invalid");
         }
       })
-
-      // const feathers = require('@feathersjs/feathers');
-      // const rest = require('@feathersjs/rest-client');
-      // const auth = require('@feathersjs/authentication-client');
-
-      // const superagent = require('superagent');
-      // const localStorage = require('localstorage-memory');
-
-      // const feathersClient = feathers();
-
-      // feathersClient.configure(rest('http://localhost:8081').superagent(superagent))
-      //   .configure(auth({ storage: localStorage }));
-
-      //   feathersClient.authenticate({
-      //     strategy: 'local',
-      //     email: this.state.username,
-      //     password: this.state.password
-      //   })
-      //   .then(response => {
-      //     console.log('Authenticated!', response);
-      //     sessionStorage.setItem("loginError", "false");
-      //     return feathersClient.passport.verifyJWT(response.accessToken);
-      //   })
-      //   .then(payload => {
-      //     console.log('JWT Payload', payload);
-      //     return feathersClient.service('users').get(payload.userId);
-      //   })
-      //   .then(user => {
-      //     feathersClient.set('user', user);
-      //     console.log('User', feathersClient.get('user'));
-      //   })
-      //   .catch(function(error){
-      //      sessionStorage.setItem("loginError", "true");
-      //     console.error('Error authenticating!', error);
-      //   });
- 
-      //   setTimeout(() => {
-          
-      //     if ( JSON.parse(sessionStorage.getItem("loginError")) === false ) {
-      //       this.clearValidationErr("username");
-      //       this.setState({
-      //         redirectToHome: true
-      //       });
-      //       console.log("ajunge in plm aici?")
-      //       // localStorage.setItem( 'showLogin', false);
-      //       this.hideLogin();
-      //       window.location.reload();
-      //     }
-  
-      //     if ( JSON.parse(sessionStorage.getItem("loginError")) === true) {
-      //       this.setState({
-      //         redirectToHome: false
-      //       })
-      //       this.showValidationErr("username", "Username or password is invalid");
-      //     }
-      //   }, 1000)
   }
 
   hideLogin = () => {
@@ -404,12 +348,19 @@ class RegisterBox extends React.Component {
     }
 
     post(users, this.state, (response) => {
-        localStorage.setItem( 'username', this.state.username);
+      console.log("response", response)
+        if(response.status == 201) {
+          localStorage.setItem( 'username', this.state.username);
         this.props.hideLogin();
         this.setState({
           redirectToHome: true,
         })
         this.props.setLoggedInTrue();
+        this.clearValidationErr("username");
+        } else {
+          this.showValidationErr("username", "Username or Email already exists")
+        }
+
     })
 
   }
