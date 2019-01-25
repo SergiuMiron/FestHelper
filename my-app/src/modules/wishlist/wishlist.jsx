@@ -5,6 +5,8 @@ import Table from './wishlist-table/wishlist-table';
 import Pagination from '../../common/pagination/pagination';
 import { getLocations } from './apiCall';
 import { wishlist } from '../../endpoints';
+import { Button, Empty } from 'antd';
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
     display: block;
@@ -124,6 +126,7 @@ class Wishlist extends Component {
 
     render() {
         return(
+            this.state.body.length > 0 ? 
             <Container>
                 <WishlistHeaderTable filterPageCity={this.filterPageCity} filterPagePrice={this.filterPagePrice}></WishlistHeaderTable>
                  <Table
@@ -140,6 +143,14 @@ class Wishlist extends Component {
                             totalPages={this.state.totalPages}
                             maxLocationsPerPage={this.state.maxLocationsPerPage}/>
             </Container>
+            : <Empty  image="https://gw.alipayobjects.com/mdn/miniapp_social/afts/img/A*pevERLJC9v0AAAAAAAAAAABjAQAAAQ/original"
+                description="As you can see, you don't have any locations in your wishlist at the moment">
+                <Link to ={"/locations"}>
+                    <Button type="primary">
+                        Add some locations in your wishlist!
+                    </Button>
+                </Link>
+             </Empty> 
         )
     }
 }

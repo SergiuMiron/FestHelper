@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
-import Button from '../../../common/button/button';
 import ContainerHeader from '../../../common/container-header/container-header';
 import SelectBoxTabel from './selectBoxTable';
 import { Link } from "react-router-dom";
+import { Button } from 'antd';
 
 class HeaderTable extends Component {
 
@@ -68,7 +68,9 @@ class HeaderTable extends Component {
                     </DivBtnDropDown>
                     <DivButton >
                         <Link to ={"/add-a-location"}>
-                           <Button size='Medium' textTransform='capitalize' title='+ Create a New Location' action= { this.setRedirect }></Button>
+                        <Button type="primary" size="large">
+                                    Add a new location!
+                        </Button>
                         </Link>
                     </DivButton>
                 </DivFiltering>

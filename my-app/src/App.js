@@ -10,6 +10,7 @@ import Theme from './config/theme';
 import {Login} from './modules/login/login';
 import LocationDetails from './modules/location_details/locationDetails';
 import Wishlist from './modules/wishlist/wishlist';
+import 'antd/dist/antd.css';
 
 class App extends Component {
   constructor(props){
@@ -47,7 +48,6 @@ class App extends Component {
   }
 
   render() {
-    // localStorage.setItem( 'showLogin', "false");
     return (
       <ThemeProvider theme={Theme}>
          <div className="App">

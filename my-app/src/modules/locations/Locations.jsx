@@ -5,6 +5,9 @@ import { locations } from '../../endpoints';
 import Table from './table/table';
 import Pagination from '../../common/pagination/pagination';
 import HeaderTable from './header-table/headerTable';
+import { Empty,Button,Spin,Icon } from 'antd';
+import { Link } from "react-router-dom";
+import './locations.scss';
 
 const Container = styled.div`       
     display: block;
@@ -22,6 +25,8 @@ const headings = {
     endDate: "End date"
 };
 
+const antIcon = <Icon type="loading" style={{ fontSize: 50, }} spin />;
+
 class Locations extends Component {
     constructor(props) {
         super(props);
@@ -35,6 +40,7 @@ class Locations extends Component {
             filterByPrice:  '',
             itemOfPrice: '',
             skippedLocations: 0,
+            loading: true,
         }
     }
 
@@ -72,6 +78,7 @@ class Locations extends Component {
     }
 
     componentWillMount() {
+
         this.update();
         const url = this.queryParamsForExcludingPicturesFields();
         getLocations(url, data => {
@@ -80,6 +87,15 @@ class Locations extends Component {
               
             });
           });
+    }
+    componentDidMount() {
+        setTimeout(
+            function() {
+                this.setState({loading: false});
+            }
+            .bind(this),
+            500
+        );
     }
 
     filterPageCity = (filterDropDown, selectedItem) => {
@@ -122,25 +138,40 @@ class Locations extends Component {
     }
 
     render() { 
-        // console.log("currentPage", this.state.currentPage);
-        // console.log("totalPages", this.state.totalPages);
-        // console.log("maxLocations per page", this.state.maxLocationsPerPage)
         return ( 
-            <Container>
-                <HeaderTable filterPageCity={this.filterPageCity} filterPagePrice={this.filterPagePrice}/>
-               <Table
-                    headings={headings}
-                    data={this.state.body}
-                    setKey={this.setKeyToSortBy}
-                    order={this.state.order}
-                    sorted={this.state.sorted}
-                    updatePagination={this.update}
-                    maxQuestionsPerPage={this.state.maxLocationsPerPage}
-                    currentPage={this.state.currentPage}
-            />
-             <Pagination changePage={this.changePage} currentPage={this.state.currentPage} totalPages={this.state.totalPages} maxLocationsPerPage={this.state.maxLocationsPerPage} />
-            </Container>
-         );
+            this.state.loading ? 
+                <div className="spinner">
+                    <Spin indicator={antIcon}
+                        size="large"
+                        spinning={this.state.loading}
+                        tip="Loading..."
+                        wrapperClassName="spinner"></Spin>
+                </div>
+                : 
+                this.state.body.length > 0 ? 
+                    <Container>
+                        <HeaderTable filterPageCity={this.filterPageCity} filterPagePrice={this.filterPagePrice}/>
+                    <Table
+                            headings={headings}
+                            data={this.state.body}
+                            setKey={this.setKeyToSortBy}
+                            order={this.state.order}
+                            sorted={this.state.sorted}
+                            updatePagination={this.update}
+                            maxQuestionsPerPage={this.state.maxLocationsPerPage}
+                            currentPage={this.state.currentPage}
+                    />
+                    <Pagination changePage={this.changePage} currentPage={this.state.currentPage} totalPages={this.state.totalPages} maxLocationsPerPage={this.state.maxLocationsPerPage} />
+                    </Container> 
+                     :  <Empty  image="https://gw.alipayobjects.com/mdn/miniapp_social/afts/img/A*pevERLJC9v0AAAAAAAAAAABjAQAAAQ/original"
+                            description="There are no locations available at the moment">
+                            <Link to ={"/add-a-location"}>
+                                <Button type="primary">
+                                    Go add a new location!
+                                </Button>
+                            </Link>
+                       </Empty> 
+        );
     }
 }
  

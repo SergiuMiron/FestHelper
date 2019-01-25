@@ -41,7 +41,7 @@ export const StyledConfirmationDialog = styled.div`
             display: flex;
             justify-content: flex-end;
             
-            .btn {
+            button {
                 margin-right: 30px;
             }
         }

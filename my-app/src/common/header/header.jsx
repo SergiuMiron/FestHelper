@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import Item from './components/item';
 import styled from 'styled-components';
 import { ConfirmationDialog } from '../confirmation-dialog/confirmation-dialog';
-import "./header.scss"
+import "./header.scss";
+import { Menu, Dropdown, Icon, Modal, Button, Avatar } from 'antd';
+import FeedbackModal from '../feedback-modal/feedback-modal';
 
 const navbarItems = [
     { href: "/locations", text: "Locations" },
@@ -26,7 +28,24 @@ class Header extends Component {
         this.state = { 
             username: localStorage.getItem('username') || "",
             showConfirmationDialog: false,
+            showFeedbackModal: false,
          }
+    }
+
+    menu = (
+        <Menu onClick={() => this.showFeedbackModal()}>
+          <Menu.Item key="1">Send your feedback here</Menu.Item>
+        </Menu>
+    );
+
+    showFeedbackModal = () => {
+        this.setState({
+            showFeedbackModal:true,
+        })
+    }
+
+    handleCancelFeedbackModal = () => {
+        this.setState({ showFeedbackModal: false });
     }
 
     logOut = () => {
@@ -65,8 +84,12 @@ class Header extends Component {
                     handleAction={() => this.logOut()}>
                 </ConfirmationDialog>
 
+                <FeedbackModal showFeedbackModal={this.state.showFeedbackModal}
+                               handleCancelFeedbackModal={this.handleCancelFeedbackModal}>
+                </FeedbackModal>
+
                 <div className="login-container">
-                    <i className="fas fa-user-circle" ></i>
+                    <Avatar src="/assets/picture.png" size={55}/>
                 {this.props.isLoggedIn && this.state.username !== "" ? <Fragment>
                                                                             <div>Welcome, {localStorage.getItem('username')}</div>
                                                                             <i className="fas fa-sign-out-alt" onClick={() => this.showModal()}></i>
@@ -84,6 +107,11 @@ class Header extends Component {
                     ))}
                     </ul>
                </div>
+
+                <Dropdown overlay={this.menu} trigger={['click']}>
+                    <Icon type="bars" style={{ fontSize:'40px', color: '#808080', cursor: 'pointer'}}/>
+                </Dropdown>
+
             </div>
          );
     }
