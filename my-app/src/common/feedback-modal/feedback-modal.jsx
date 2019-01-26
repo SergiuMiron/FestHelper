@@ -27,7 +27,9 @@ class FeedbackModal extends Component {
           this.setState({ loading: false,
                            feedback: "" });
           this.props.handleCancelFeedbackModal();
+          this.props.showNotification();
         }, 3000);
+
     }
 
     onFeedbackChange = (event) => {

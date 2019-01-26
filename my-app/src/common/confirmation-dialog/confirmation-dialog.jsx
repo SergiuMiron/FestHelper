@@ -15,7 +15,7 @@ export class ConfirmationDialog extends Component {
                     <p>{ this.props.message }</p>
                     <div className="flex-buttons">
                         <Button type="primary" size="small" onClick={this.props.handleClose}>CANCEL</Button>
-                        <Button type="primary" size="small" onClick={this.props.handleAction}>LOGOUT</Button>
+                        <Button type="primary" size="small" onClick={this.props.handleAction}>{this.props.rightButtonTitle}</Button>
                     </div>
                 </section>
              </div>

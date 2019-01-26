@@ -5,7 +5,7 @@ import Table from './wishlist-table/wishlist-table';
 import Pagination from '../../common/pagination/pagination';
 import { getLocations } from './apiCall';
 import { wishlist } from '../../endpoints';
-import { Button, Empty } from 'antd';
+import { Button, Empty,Spin,Icon } from 'antd';
 import { Link } from "react-router-dom";
 
 const Container = styled.div`
@@ -23,6 +23,8 @@ const headings = {
     endDate: "End date"
 }
 
+const antIcon = <Icon type="loading" style={{ fontSize: 50, }} spin />;
+
 class Wishlist extends Component {
     constructor(props) {
         super(props);
@@ -37,8 +39,19 @@ class Wishlist extends Component {
             filterByPrice: '',
             itemOfPrice: '',
             skippedLocations: 0,
-            username: localStorage.getItem('username') || ""
+            username: localStorage.getItem('username') || "",
+            loading: true,
         }
+    }
+
+    componentDidMount() {
+        setTimeout(
+            function() {
+                this.setState({loading: false});
+            }
+            .bind(this),
+            500
+        );
     }
 
     queryParams() {
@@ -126,32 +139,41 @@ class Wishlist extends Component {
 
     render() {
         return(
-            this.state.body.length > 0 ? 
-            <Container>
-                <WishlistHeaderTable filterPageCity={this.filterPageCity} filterPagePrice={this.filterPagePrice}></WishlistHeaderTable>
-                 <Table
-                    headings={headings}
-                    data={this.state.body}
-                    setKey={this.setKeyToSortBy}
-                    order={this.state.order}
-                    sorted={this.state.sorted}
-                    updatePagination={this.update}
-                    maxQuestionsPerPage={this.state.maxLocationsPerPage}
-                    currentPage={this.state.currentPage} />
-                <Pagination changePage={this.changePage} 
-                            currentPage={this.state.currentPage} 
-                            totalPages={this.state.totalPages}
-                            maxLocationsPerPage={this.state.maxLocationsPerPage}/>
-            </Container>
-            : <Empty  image="https://gw.alipayobjects.com/mdn/miniapp_social/afts/img/A*pevERLJC9v0AAAAAAAAAAABjAQAAAQ/original"
-                description="As you can see, you don't have any locations in your wishlist at the moment">
-                <Link to ={"/locations"}>
-                    <Button type="primary">
-                        Add some locations in your wishlist!
-                    </Button>
-                </Link>
-             </Empty> 
-        )
+            this.state.loading ? 
+                <div className="spinner">
+                    <Spin indicator={antIcon}
+                        size="large"
+                        spinning={this.state.loading}
+                        tip="Loading..."
+                        wrapperClassName="spinner"></Spin>
+                 </div>
+                :
+                this.state.body.length > 0 ? 
+                <Container>
+                    <WishlistHeaderTable filterPageCity={this.filterPageCity} filterPagePrice={this.filterPagePrice}></WishlistHeaderTable>
+                    <Table
+                        headings={headings}
+                        data={this.state.body}
+                        setKey={this.setKeyToSortBy}
+                        order={this.state.order}
+                        sorted={this.state.sorted}
+                        updatePagination={this.update}
+                        maxQuestionsPerPage={this.state.maxLocationsPerPage}
+                        currentPage={this.state.currentPage} />
+                    <Pagination changePage={this.changePage} 
+                                currentPage={this.state.currentPage} 
+                                totalPages={this.state.totalPages}
+                                maxLocationsPerPage={this.state.maxLocationsPerPage}/>
+                </Container>
+                : <Empty  image="https://gw.alipayobjects.com/mdn/miniapp_social/afts/img/A*pevERLJC9v0AAAAAAAAAAABjAQAAAQ/original"
+                    description="As you can see, you don't have any locations in your wishlist at the moment">
+                    <Link to ={"/locations"}>
+                        <Button type="primary">
+                            Add some locations in your wishlist!
+                        </Button>
+                    </Link>
+                </Empty> 
+            )
     }
 }
 

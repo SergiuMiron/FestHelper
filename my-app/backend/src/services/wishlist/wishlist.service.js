@@ -21,11 +21,11 @@ module.exports = function () {
   // Get our initialized service so that we can register hooks and filters
   const service = app.service('wishlist');
 
-  app.service('wishlist').find({
-    query: {
-      username: new URLSearchParams(this.username)
-    }
-  })
+  // app.service('wishlist').find({
+  //   query: {
+  //     username: new URLSearchParams(this.username)
+  //   }
+  // })
     
 
   service.hooks(hooks);

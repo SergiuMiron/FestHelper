@@ -4,7 +4,7 @@ import Item from './components/item';
 import styled from 'styled-components';
 import { ConfirmationDialog } from '../confirmation-dialog/confirmation-dialog';
 import "./header.scss";
-import { Menu, Dropdown, Icon, Modal, Button, Avatar } from 'antd';
+import { Menu, Dropdown, Icon, Modal, Button, Avatar,notification } from 'antd';
 import FeedbackModal from '../feedback-modal/feedback-modal';
 
 const navbarItems = [
@@ -21,6 +21,18 @@ const StyledLink = styled(Link)`
         text-decoration: none;
     }
 `;
+
+const openNotification = () => {
+    notification.success({
+      message: '',
+      description: 'Succesfully sent. Thank you for your feedback!',
+      placement: "bottomRight",
+      style: {
+        fontWeight: 600,
+        fontFamily: 'Roboto',
+      },
+    });
+  };
   
 class Header extends Component {
     constructor(props) {
@@ -83,9 +95,10 @@ class Header extends Component {
                     handleClose={this.hideModal}
                     handleAction={() => this.logOut()}>
                 </ConfirmationDialog>
-
+                
                 <FeedbackModal showFeedbackModal={this.state.showFeedbackModal}
-                               handleCancelFeedbackModal={this.handleCancelFeedbackModal}>
+                            handleCancelFeedbackModal={this.handleCancelFeedbackModal}
+                            showNotification={openNotification}>
                 </FeedbackModal>
 
                 <div className="login-container">

@@ -9,6 +9,7 @@ import { ConfirmationDialog } from '../../../common/confirmation-dialog/confirma
 import { deleteLocation } from '../apiCalls';
 import { locations } from '../../../endpoints';
 import PopUp from '../../../common/pop-up/pop-up';
+import { Tooltip } from 'antd';
 
 class Table extends Component {
     constructor(props) {
@@ -101,7 +102,9 @@ class Table extends Component {
                                     <Td textAlign='left'>{this.props.maxQuestionsPerPage * (this.props.currentPage - 1) + index   + 1}</Td>
                                     <Td textAlign='left' textOverflow="ellipsis" maxWidth='325px'>{row.name}</Td>
                                     <Td textAlign='left' maxWidth='160px'>{row.city}</Td>
-                                    <Td textAlign='left'>{row.price}</Td>
+                                    <Tooltip title="The price is in EUR and it counts per night!">
+                                         <Td textAlign='left'>{row.price}</Td>
+                                    </Tooltip>
                                     <Td textAlign='left' color={Theme[`${row.difficulty}Color`]}> 0{row.phone}</Td>
                                     <Td textAlign='left'>{<Moment format="MM.DD.YYYY">{row.startLocation}</Moment>}</Td>
                                     <Td textAlign='left'>{<Moment format="MM.DD.YYYY">{row.endLocation}</Moment>}</Td>
