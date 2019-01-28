@@ -5,7 +5,7 @@ import { locations } from '../../endpoints';
 import Table from './table/table';
 import Pagination from '../../common/pagination/pagination';
 import HeaderTable from './header-table/headerTable';
-import { Empty,Button,Spin,Icon } from 'antd';
+import { Empty,Button,Spin,Icon,Menu } from 'antd';
 import { Link } from "react-router-dom";
 import './locations.scss';
 

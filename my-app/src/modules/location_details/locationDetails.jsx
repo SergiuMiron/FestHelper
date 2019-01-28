@@ -6,6 +6,7 @@ import Moment from 'react-moment';
 import Button  from '../../common/button/button';
 import { postLocationToWishlist } from './apiCall';
 import defaultWishlistLocation from './defaultWishlistLocation';
+import PopUp from '../../common/pop-up/pop-up';
 import './locationDetails.scss';
 
 class LocationDetails extends Component {
@@ -21,6 +22,9 @@ class LocationDetails extends Component {
             endLocation: "",
             pictures: "",
             description: "",
+            popup: false,
+            actionResult: '',
+            messageForPopup: '',
             idOfQuestion: this.props.match.params.id || "",
         }
     }
@@ -62,12 +66,41 @@ class LocationDetails extends Component {
     addToWishlist = () => {
         const objectToAdd = this.createWishlistObject();
        postLocationToWishlist(wishlist, objectToAdd, (response) => {
+           window.scrollTo({
+               top: 0,
+               left: 0,
+               behavior: 'smooth'
+           })
+
+           this.setState({
+               actionResult: response.ok,
+               popup: true
+           })
+
+           this.state.actionResult === true ? 
+              this.setState({ messageForPopup: "Your location have been aded to the wishlist" })
+              : this.setState({ messageForPopup: "Your location have not been added to the wishlist" })
        })
+       
+    }
+
+    closePopup = () => {
+        this.setState({
+            actionResult: '',
+            popup: false
+        })
     }
 
     render() {
         return(
             <Fragment>
+                 {this.state.popup  ? 
+               <PopUp 
+                   status={this.state.actionResult}
+                   onClose={this.closePopup}
+                   message={this.state.messageForPopup}
+                   delay={3000}/>
+               : null}
                 <div className="big-container">
                     <div className="upper-container__details-page">
                         <div className="left-container__details-page">

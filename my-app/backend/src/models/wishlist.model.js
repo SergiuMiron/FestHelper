@@ -7,7 +7,7 @@ module.exports = function (app) {
   const { Schema } = mongooseClient;
   const wishlist = new Schema({
     username: { type: String },
-    name: { type: String, required: true, minLength: 1, maxLength: 120 },
+    name: { type: String, unique: true, required: true, minLength: 1, maxLength: 120 },
     city: { type: String, required: true, minLength: 1, maxLength: 120 },
     price: { type: Number, required: true, minLength: 1, maxLength: 120 },
     phone: { type: Number, minLength: 1, maxLength: 120 },

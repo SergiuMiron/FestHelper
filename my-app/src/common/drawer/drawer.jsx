@@ -43,7 +43,7 @@ class CustomDrawer extends Component {
     render() {
         return(
             <Drawer
-                    width={640}
+                    width={340}
                     placement="right"
                     closable={false}
                     onClose={this.props.onClose}

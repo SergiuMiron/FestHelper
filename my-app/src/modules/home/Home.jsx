@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from 'react';
-import { Card,Col,Row,Icon,Drawer, List, Avatar, Divider } from 'antd';
+import { Card,Col,Row,Icon,Spin } from 'antd';
 import CustomDrawer from '../../common/drawer/drawer';
 import './Home.scss';
 
 const { Meta } = Card;
+const antIcon = <Icon type="loading" style={{ fontSize: 50, }} spin />;
 
 class Home extends Component {
     constructor(props) {
@@ -16,7 +17,17 @@ class Home extends Component {
             facebookLink: "",
             instagramLink: "",
             youtubeLink: "",
+            loading: true
          }
+    }
+
+    componentDidMount() {
+        setTimeout(
+            function() {
+                this.setState({loading: false}); }
+            .bind(this),
+            500
+        );
     }
 
     showUntoldDrawer = () => {
@@ -63,51 +74,59 @@ class Home extends Component {
 
     render() { 
         return ( 
-           <Fragment>
-                <div style={{padding: '30px' }}>
-                    <Row gutter={16}>
-                        <Col span={6}>
-                            <div onClick={() => this.showUntoldDrawer()}>
-                                <Card hoverable  style={{ width: 300, height:300 }}  cover={<img alt="example" src="/assets/untold.png" />}
-                                    actions={[ <a href="https://www.facebook.com/UNTOLDFestival/"><Icon type="facebook" /></a>, 
-                                                <a href="https://www.youtube.com/watch?v=o1u2sT8ah58"><Icon type="youtube" /></a>, 
-                                                <a href="https://www.instagram.com/untoldfestival/?hl=ro"><Icon type="instagram" /></a>]}>
-                                    <Meta title="Untold" description={<a href="https://untold.com/en">www.untold.ro</a>}/>
-                                </Card>
-                            </div>
-                        </Col>
-                        <Col span={6}>
-                            <div onClick={() => this.showElectricCastleDrawer()}>
-                                <Card hoverable  style={{ width: 300, height:300 }}  cover={<img alt="example" src="/assets/electric-castle.jpg" />}
-                                    actions={[ <a href="https://www.facebook.com/ElectricCastle/"><Icon type="facebook" /></a>, 
-                                                <a href="https://www.youtube.com/watch?v=JQl6EvqMgpE"><Icon type="youtube" /></a>, 
-                                                <a href="https://www.instagram.com/electriccastle/?hl=ro"><Icon type="instagram" /></a>,]}>
-                                    <Meta title="Electric Castle" description={<a href="https://electriccastle.ro/">www.electriccastle.ro</a>}/>
-                                </Card>
-                            </div>
-                       </Col>
-                       <Col span={6}>
-                            <div onClick={() => this.showNeverseaDrawer()}>
-                                <Card hoverable  style={{ width: 300, height:300 }}  cover={<img alt="example" src="/assets/neversea.jpg" />}
-                                    actions={[ <a href="https://www.facebook.com/NeverseaFestival/"><Icon type="facebook"/></a>, 
-                                                <a href="https://www.youtube.com/watch?v=pPAEp_8D8zM"><Icon type="youtube"/></a>, 
-                                                <a href="https://www.instagram.com/neverseafestival/?hl=ro"><Icon type="instagram" /></a>,]}>
-                                    <Meta title="Neversea" description={<a href="https://www.neversea.com/en">www.neversea.com</a>}/>
-                                </Card>
-                            </div>
-                        </Col>
-                    </Row>
-                </div>
+            this.state.loading ? 
+            <div className="spinner">
+                <Spin indicator={antIcon}
+                    size="large"
+                    spinning={this.state.loading}
+                    tip="Loading..."
+                    wrapperClassName="spinner"></Spin>
+            </div>
+            :
+            <Fragment>
                 <CustomDrawer visible={this.state.visible}
-                              onClose={this.onClose}
-                              festivalName={this.state.festivalName}
-                              description={this.state.description}
-                              lineup={this.state.lineup}
-                              facebookLink={this.state.facebookLink}
-                              instagramLink={this.state.instagramLink}
-                              youtubeLink={this.state.youtubeLink} ></CustomDrawer>
-
-           </Fragment>
+            onClose={this.onClose}
+            festivalName={this.state.festivalName}
+            description={this.state.description}
+            lineup={this.state.lineup}
+            facebookLink={this.state.facebookLink}
+            instagramLink={this.state.instagramLink}
+            youtubeLink={this.state.youtubeLink} ></CustomDrawer>
+            <div style={{padding: '30px' }}>
+                <Row gutter={16}>
+                    <Col span={6}>
+                        <div onClick={() => this.showUntoldDrawer()}>
+                            <Card hoverable  style={{ width: 300, height:300 }}  cover={<img alt="example" src="/assets/untold.png" />}
+                                actions={[ <a href="https://www.facebook.com/UNTOLDFestival/"><Icon type="facebook" /></a>, 
+                                            <a href="https://www.youtube.com/watch?v=o1u2sT8ah58"><Icon type="youtube" /></a>, 
+                                            <a href="https://www.instagram.com/untoldfestival/?hl=ro"><Icon type="instagram" /></a>]}>
+                                <Meta title="Untold" description={<a href="https://untold.com/en">www.untold.ro</a>}/>
+                            </Card>
+                        </div>
+                    </Col>
+                    <Col span={6}>
+                        <div onClick={() => this.showElectricCastleDrawer()}>
+                            <Card hoverable  style={{ width: 300, height:300 }}  cover={<img alt="example" src="/assets/electric-castle.jpg" />}
+                                actions={[ <a href="https://www.facebook.com/ElectricCastle/"><Icon type="facebook" /></a>, 
+                                            <a href="https://www.youtube.com/watch?v=JQl6EvqMgpE"><Icon type="youtube" /></a>, 
+                                            <a href="https://www.instagram.com/electriccastle/?hl=ro"><Icon type="instagram" /></a>,]}>
+                                <Meta title="Electric Castle" description={<a href="https://electriccastle.ro/">www.electriccastle.ro</a>}/>
+                            </Card>
+                        </div>
+                    </Col>
+                    <Col span={6}>
+                        <div onClick={() => this.showNeverseaDrawer()}>
+                            <Card hoverable  style={{ width: 300, height:300 }}  cover={<img alt="example" src="/assets/neversea.jpg" />}
+                                actions={[ <a href="https://www.facebook.com/NeverseaFestival/"><Icon type="facebook"/></a>, 
+                                            <a href="https://www.youtube.com/watch?v=pPAEp_8D8zM"><Icon type="youtube"/></a>, 
+                                            <a href="https://www.instagram.com/neverseafestival/?hl=ro"><Icon type="instagram" /></a>,]}>
+                                <Meta title="Neversea" description={<a href="https://www.neversea.com/en">www.neversea.com</a>}/>
+                            </Card>
+                        </div>
+                    </Col>
+                </Row>
+            </div>
+            </Fragment>
          );
     }
 }

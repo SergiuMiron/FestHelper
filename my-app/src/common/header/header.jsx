@@ -4,7 +4,7 @@ import Item from './components/item';
 import styled from 'styled-components';
 import { ConfirmationDialog } from '../confirmation-dialog/confirmation-dialog';
 import "./header.scss";
-import { Menu, Dropdown, Icon, Modal, Button, Avatar,notification } from 'antd';
+import { Menu, Dropdown, Icon, Avatar,notification } from 'antd';
 import FeedbackModal from '../feedback-modal/feedback-modal';
 
 const navbarItems = [
@@ -102,7 +102,8 @@ class Header extends Component {
                 </FeedbackModal>
 
                 <div className="login-container">
-                    <Avatar src="/assets/picture.png" size={55}/>
+                    {/* <Avatar src="/assets/picture.png" size={55}/> */}
+                    <Avatar>USER</Avatar>
                 {this.props.isLoggedIn && this.state.username !== "" ? <Fragment>
                                                                             <div>Welcome, {localStorage.getItem('username')}</div>
                                                                             <i className="fas fa-sign-out-alt" onClick={() => this.showModal()}></i>
