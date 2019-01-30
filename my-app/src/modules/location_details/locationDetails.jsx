@@ -3,11 +3,43 @@ import { getLocations } from '../locations/apiCalls';
 import { locations,wishlist } from '../../endpoints';
 import { Grid,Col,Image,Row } from 'react-bootstrap';
 import Moment from 'react-moment';
-import Button  from '../../common/button/button';
-import { postLocationToWishlist } from './apiCall';
+// import Button  from '../../common/button/button';
+import { postLocationToWishlist, updateLocationToWishlist } from './apiCall';
 import defaultWishlistLocation from './defaultWishlistLocation';
 import PopUp from '../../common/pop-up/pop-up';
+import { Comment, Avatar, Form, Button, List, Input } from 'antd';
+import moment from 'moment';
 import './locationDetails.scss';
+
+const TextArea = Input.TextArea;
+// const CommentList = ({ comments }) => (
+//     <List
+//       dataSource={comments}
+//       header={`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`}
+//       itemLayout="horizontal"
+//       renderItem={props => <Comment {...props} />}
+//     />
+//   );
+
+const Editor = ({
+onChange, onSubmit, submitting, value,
+}) => (
+<div>
+    <Form.Item>
+    <TextArea rows={4} onChange={onChange} value={value} />
+    </Form.Item>
+    <Form.Item>
+    <Button
+        htmlType="submit"
+        loading={submitting}
+        onClick={onSubmit}
+        type="primary"
+    >
+        Add Comment
+    </Button>
+    </Form.Item>
+</div>
+);
 
 class LocationDetails extends Component {
     constructor(props) {
@@ -26,6 +58,9 @@ class LocationDetails extends Component {
             actionResult: '',
             messageForPopup: '',
             idOfQuestion: this.props.match.params.id || "",
+            comments: [],
+            submitting: false,
+            value: '',
         }
     }
 
@@ -40,7 +75,8 @@ class LocationDetails extends Component {
                     startLocation: data[0].startLocation,
                     endLocation: data[0].endLocation,
                     pictures: data[0].pictures,
-                    description: data[0].description
+                    description: data[0].description,
+                    // comments: data[0].comments
                 })
             })
         }
@@ -59,6 +95,7 @@ class LocationDetails extends Component {
                     : newWishlistLocation["pictures"] = "";
                     newWishlistLocation["description"] = this.state.description;
         newWishlistLocation["username"] = localStorage.getItem('username');
+        newWishlistLocation["comments"] = this.state.comments;
         return newWishlistLocation;
       }
 
@@ -84,6 +121,46 @@ class LocationDetails extends Component {
        
     }
 
+    handleChange = (e) => {
+        this.setState({
+          value: e.target.value,
+        });
+      }
+
+    handleSubmit = () => {
+        if (!this.state.value) {
+          return;
+        }
+    
+        this.setState({
+          submitting: true,
+        });
+        
+        setTimeout(() => {
+          this.setState({
+            submitting: false,
+            value: '',
+            comments: [
+                {
+                  author: localStorage.getItem('username'),
+                  avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+                  content: <p>{this.state.value}</p>,
+                  datetime: moment().fromNow(),
+                },
+                ...this.state.comments,
+              ],
+          });
+          
+          const objectToUpdate = this.createWishlistObject();
+          updateLocationToWishlist(locations + '/' + this.state.idOfQuestion, objectToUpdate, (response) => {
+          })
+
+
+        }, 1000);
+
+
+    }
+
     closePopup = () => {
         this.setState({
             actionResult: '',
@@ -92,6 +169,7 @@ class LocationDetails extends Component {
     }
 
     render() {
+        console.log("final data: ", this.state.comments);
         return(
             <Fragment>
                  {this.state.popup  ? 
@@ -140,6 +218,32 @@ class LocationDetails extends Component {
                             <div className="description-content">{this.state.description}</div>
                         </div>
 
+                    </div>
+
+                    <div>
+                    {this.state.comments !== undefined && this.state.comments.length > 0 ? 
+                      <List
+                      dataSource={this.state.comments}
+                      header={`${this.state.comments.length} ${this.state.comments.length > 1 ? 'replies' : 'reply'}`}
+                      itemLayout="horizontal"
+                      renderItem={props => <Comment {...props} />}
+                      /> : null}
+                        <Comment
+                            avatar={(
+                                <Avatar
+                                src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                                alt="Han Solo"
+                                />
+                            )}
+                            content={(
+                                <Editor
+                                onChange={this.handleChange}
+                                onSubmit={this.handleSubmit}
+                                submitting={this.state.submitting}
+                                value={this.state.value}
+                                />
+                            )}
+                            />
                     </div>
                     
                     <div className="details-location-button align-right">

@@ -13,7 +13,8 @@ module.exports = function (app) {
       startLocation: { type: Date, required: true},
       endLocation: { type: Date, require: true },
       pictures: { type: String },
-      description: { type: String }
+      description: { type: String },
+      comments: { type: Object }
     }, {
       timestamps: true
     });

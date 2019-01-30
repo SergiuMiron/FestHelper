@@ -22,6 +22,7 @@ class AddALocation extends Component {
           nameError: "",
           ownerError: "",
           priceValue: 0,
+          commentsValue: [],
           startLocationError: "",
           endLocationError: "",
           startLocationValue: "",
@@ -174,6 +175,7 @@ class AddALocation extends Component {
                     newLocation["pictures"] = this.state.pictures[0].base64 
                     : newLocation["pictures"] = "";
         newLocation["description"] = this.state.description;
+        newLocation["comments"] = this.state.commentsValue;
         return newLocation;
       }
 
