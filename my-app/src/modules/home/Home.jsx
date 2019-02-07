@@ -94,9 +94,9 @@ class Home extends Component {
             youtubeLink={this.state.youtubeLink} ></CustomDrawer>
             <div style={{padding: '30px' }}>
                 <Row gutter={16}>
-                    <Col span={6}>
+                    <Col  xs={24} sm={12} lg={8} xl={6}>
                         <div onClick={() => this.showUntoldDrawer()}>
-                            <Card hoverable  style={{ width: 300, height:300 }}  cover={<img alt="example" src="/assets/untold.png" />}
+                            <Card hoverable  style={{ width: 250, height:250 }}  cover={<img alt="example" src="/assets/untold.png" />}
                                 actions={[ <a href="https://www.facebook.com/UNTOLDFestival/"><Icon type="facebook" /></a>, 
                                             <a href="https://www.youtube.com/watch?v=o1u2sT8ah58"><Icon type="youtube" /></a>, 
                                             <a href="https://www.instagram.com/untoldfestival/?hl=ro"><Icon type="instagram" /></a>]}>
@@ -104,9 +104,9 @@ class Home extends Component {
                             </Card>
                         </div>
                     </Col>
-                    <Col span={6}>
+                    <Col xs={24} sm={12} lg={8} xl={6}>
                         <div onClick={() => this.showElectricCastleDrawer()}>
-                            <Card hoverable  style={{ width: 300, height:300 }}  cover={<img alt="example" src="/assets/electric-castle.jpg" />}
+                            <Card hoverable  style={{ width: 250, height:250 }}  cover={<img alt="example" src="/assets/electric-castle.jpg" />}
                                 actions={[ <a href="https://www.facebook.com/ElectricCastle/"><Icon type="facebook" /></a>, 
                                             <a href="https://www.youtube.com/watch?v=JQl6EvqMgpE"><Icon type="youtube" /></a>, 
                                             <a href="https://www.instagram.com/electriccastle/?hl=ro"><Icon type="instagram" /></a>,]}>
@@ -114,9 +114,9 @@ class Home extends Component {
                             </Card>
                         </div>
                     </Col>
-                    <Col span={6}>
+                    <Col xs={24} sm={12} lg={8} xl={6}>
                         <div onClick={() => this.showNeverseaDrawer()}>
-                            <Card hoverable  style={{ width: 300, height:300 }}  cover={<img alt="example" src="/assets/neversea.jpg" />}
+                            <Card hoverable  style={{ width: 250, height:250 }}  cover={<img alt="example" src="/assets/neversea.jpg" />}
                                 actions={[ <a href="https://www.facebook.com/NeverseaFestival/"><Icon type="facebook"/></a>, 
                                             <a href="https://www.youtube.com/watch?v=pPAEp_8D8zM"><Icon type="youtube"/></a>, 
                                             <a href="https://www.instagram.com/neverseafestival/?hl=ro"><Icon type="instagram" /></a>,]}>

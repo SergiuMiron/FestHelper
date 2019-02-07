@@ -8,6 +8,10 @@ const DivFiltering = styled.div`
     justify-content: space-between;
     align-items: baseline;
     margin-bottom: 100px;
+
+    @media only screen and (max-width: 1024px) {
+        display: block;
+     }
     `;
 const DivBtnDropDown = styled.div`
     align-items: baseline;
@@ -26,11 +30,19 @@ const Label = styled.label`
     font-weight: 500;
     padding-right: 3px;
     color: ${props => props.theme.secondaryColor};
+
+    @media only screen and (max-width: 1024px) {
+        font-size: 10px;
+    }
     `;
 const DivSelectBox = styled.div`
     display: flex;
     position: relative;
     align-items:baseline;
+
+    @media only screen and (max-width: 1024px) {
+        display: block;
+    }
     `;
 
 

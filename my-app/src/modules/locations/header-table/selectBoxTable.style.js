@@ -42,6 +42,10 @@ export const StyledBtn = styled.button`
         right: 10px;
         top: 5px;
     }
+
+    @media only screen and (max-width: 1024px) {
+       font-size: 10px;
+    }
     `;
 
 export const StyledContainer= styled.div`

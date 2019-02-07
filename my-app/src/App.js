@@ -10,6 +10,7 @@ import Theme from './config/theme';
 import {Login} from './modules/login/login';
 import LocationDetails from './modules/location_details/locationDetails';
 import Wishlist from './modules/wishlist/wishlist';
+import Announces from './modules/announces/announces';
 import 'antd/dist/antd.css';
 
 class App extends Component {
@@ -60,6 +61,7 @@ class App extends Component {
                   <Route path="/locations" component={Locations} />
                   <Route path="/add-a-location" component={AddALocation} />
                   <Route path="/wishlist" component={Wishlist} />
+                  <Route path="/announces" component={Announces} />
                   <Route
                     path="/login"
                     render={() => (

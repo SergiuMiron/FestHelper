@@ -1,5 +1,27 @@
 @import '../../config//theme';
 
+@media only screen and (max-width: 768px) {
+    .navbar-toggle {
+        display: block !important;
+    }
+
+    .navbar-right-side {
+        display: none;
+    }
+
+    .login-container {
+        margin-right: 20px;
+
+        .fa-user-circle {
+            font-size: 20px !important;
+        }
+
+        div {
+            font-size: 10px !important;
+        }
+    }
+}
+
 .navbar {
     white-space: nowrap;
     padding: 0 2%;
@@ -38,7 +60,11 @@
 
 
     .navbar-logo {
-        width: 35%;
+        width: 15vw;
+    }
+
+    .navbar-toggle {
+        display: none;
     }
 
     .navbar-right-side {

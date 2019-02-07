@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { Redirect } from 'react-router-dom'
 import Input from './components/input/input';
 import Number from './components/number/number';
 import ErrorMessage from './components/errorMessage/errorMessage';
@@ -29,12 +30,15 @@ class AddALocation extends Component {
           endLocationValue: "",
           phoneValue: "",
           phoneError: "",
+          festivalValue: "",
+          festivalError: "",
           submitButtonDisabled: true,
           popup: false,
           actionResult: '',
           messageForPopup: '',
           pictures: [],
           description: "",
+          redirect: false,
          }
     }
 
@@ -176,6 +180,8 @@ class AddALocation extends Component {
                     : newLocation["pictures"] = "";
         newLocation["description"] = this.state.description;
         newLocation["comments"] = this.state.commentsValue;
+        newLocation["festival"] = this.state.festivalValue;
+        newLocation["rate"] = 0;
         return newLocation;
       }
 
@@ -197,6 +203,13 @@ class AddALocation extends Component {
           this.state.actionResult === true? 
              this.setState({ messageForPopup : "Your location have been added" })
              : this.setState({ messageForPopup : "Your location have not beed added" })
+
+             setTimeout(
+              function() {
+                  this.setState({redirect: true}); }
+              .bind(this),
+              1500
+          );
         })
       }
 
@@ -248,6 +261,12 @@ class AddALocation extends Component {
       });
   };
 
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to='/locations' />
+    }
+  }
+
     render() { 
       // if ( this.state.pictures.length > 0 )
       //    console.log(this.state.pictures[0]);
@@ -283,6 +302,13 @@ class AddALocation extends Component {
                             onBlur={this.onInputTextChange}
                             error={this.state.ownerError}
                           />
+                      </div>
+
+                      <div className="festival-input">
+                        <Input id="festival"
+                               name="Festival during this time"
+                               onChange={this.onInputTextChange}
+                               error={this.state.festivalError}></Input>
                       </div>
 
                       <p className="section-label">Upload images</p>
@@ -360,6 +386,7 @@ class AddALocation extends Component {
 
                     </section>
                     <section className="align-right save-location">
+                    {this.renderRedirect()}
                       <Button 
                           disabled={this.state.submitButtonDisabled}
                           action={this.addLocation}

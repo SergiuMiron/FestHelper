@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 const Container = styled.div`
     display: block;
     margin: 0 auto 180px auto;
-    width: 1220px;
+    width: 80%;
     `;
 
 const headings = {

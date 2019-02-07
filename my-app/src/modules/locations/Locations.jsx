@@ -11,7 +11,7 @@ import './locations.scss';
 
 const Container = styled.div`       
     display: block;
-    // margin: 0 auto 180px auto;
+    // margin: 0 auto 10px auto;
     margin: auto;
     width: 80%;
     `;
@@ -99,7 +99,7 @@ class Locations extends Component {
     }
 
     filterPageCity = (filterDropDown, selectedItem) => {
-        selectedItem === 'all'
+        selectedItem === 'All'
         ?  this.setState({
               filterByCity: '',
               itemOfCity: '',
@@ -118,7 +118,7 @@ class Locations extends Component {
         })
     }
     filterPagePrice = (filterDropDown, selectedItem) => {
-        selectedItem === 'all'
+        selectedItem === 'All'
         ?  this.setState({
               filterByPrice: '',
               itemOfPrice: '' ,

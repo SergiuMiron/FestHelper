@@ -9,7 +9,10 @@ import { ConfirmationDialog } from '../../../common/confirmation-dialog/confirma
 import { deleteLocation } from '../apiCalls';
 import { locations } from '../../../endpoints';
 import PopUp from '../../../common/pop-up/pop-up';
-import { Tooltip } from 'antd';
+import { Tooltip, Collapse } from 'antd';
+import "./table.scss";
+
+const Panel = Collapse.Panel;
 
 class Table extends Component {
     constructor(props) {
@@ -120,6 +123,27 @@ class Table extends Component {
                         }
                     </tbody>
                 </StyleTable>
+
+                <div className="table-accordeon">
+                        <Collapse accordion>
+                            { this.props.data.map((row, index) => (
+                                <Panel header={row.name}>
+                                    <div className="table-accordeon-details">
+                                        <div>City:  {row.city}</div>
+                                        <div>Phone: 0{row.phone} </div>
+                                        <div>Price:  {row.price}</div>
+                                        <div className="margin-right"><span>Available date:</span>{<Moment format="MM.DD.YYYY">{row.startLocation}</Moment>}
+                                         - {<Moment format="MM.DD.YYYY">{row.startLocation}</Moment>}</div>
+                                        <div><span>Actions:</span> 
+                                            <Link to ={"/location-details/"+row._id}>
+                                            <i className="fas fa-pencil-alt"></i>
+                                            </Link>
+                                            <i className="fas fa-trash" onClick={() => this.showModal(index)} ></i> </div>
+                                    </div>
+                                </Panel>
+                            )) }
+                        </Collapse>
+                </div>
             </Fragment>
         );
     }

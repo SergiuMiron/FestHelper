@@ -9,12 +9,14 @@ module.exports = function (app) {
       name: { type: String, required: true, minLength: 1, maxLength: 120 },
       city: { type: String, required: true, minLength: 1, maxLength: 120 },
       price: { type: Number, required: true, minLength: 1, maxLength: 120 },
+      festival: { type: String },
       phone: { type: Number, minLength: 1, maxLength: 120 },
       startLocation: { type: Date, required: true},
       endLocation: { type: Date, require: true },
       pictures: { type: String },
       description: { type: String },
-      comments: { type: Object }
+      comments: { type: Object },
+      rate: { type: Number },
     }, {
       timestamps: true
     });

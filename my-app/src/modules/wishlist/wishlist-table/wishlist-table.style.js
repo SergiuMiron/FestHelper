@@ -21,6 +21,11 @@ const StyleTable = styled.table`
     padding-left: 8.5px;
   }
 
+  @media only screen and (max-width: 1024px) {
+    display: none;
+
+}
+
 `;
 
 export default StyleTable;

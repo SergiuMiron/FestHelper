@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Link } from "react-router-dom";
+import { Link,Redirect } from "react-router-dom";
 import Item from './components/item';
 import styled from 'styled-components';
 import { ConfirmationDialog } from '../confirmation-dialog/confirmation-dialog';
@@ -11,8 +11,21 @@ const navbarItems = [
     { href: "/locations", text: "Locations" },
     { href: "/add-a-location", text: "New Location" },
     { href: "/wishlist", text: "My wishlist" },
+    { href: "/announces", text: "Announces"},
     // { href: "/home", text: "Page4" }
   ];
+
+const onClick = ({ key }) => {
+    return <Redirect to='/add-a-location'></Redirect>
+};
+
+const menu = (
+<Menu onClick={onClick}>
+    <Menu.Item ><a href="/locations">Locations</a></Menu.Item>
+    <Menu.Item ><a href="/add-a-location">New Location</a></Menu.Item>
+    <Menu.Item><a href="/wishlist">Wishlist</a></Menu.Item>
+</Menu>
+);
 
 const StyledLink = styled(Link)`
     text-decoration: none;
@@ -95,15 +108,9 @@ class Header extends Component {
                     handleClose={this.hideModal}
                     handleAction={() => this.logOut()}>
                 </ConfirmationDialog>
-                
-                <FeedbackModal showFeedbackModal={this.state.showFeedbackModal}
-                            handleCancelFeedbackModal={this.handleCancelFeedbackModal}
-                            showNotification={openNotification}>
-                </FeedbackModal>
 
                 <div className="login-container">
-                    {/* <Avatar src="/assets/picture.png" size={55}/> */}
-                    <Avatar>USER</Avatar>
+                    <i className="fas fa-user-circle" ></i>
                 {this.props.isLoggedIn && this.state.username !== "" ? <Fragment>
                                                                             <div>Welcome, {localStorage.getItem('username')}</div>
                                                                             <i className="fas fa-sign-out-alt" onClick={() => this.showModal()}></i>
@@ -112,6 +119,17 @@ class Header extends Component {
                                                                         <StyledLink to="/login">
                                                                             <div onClick={() => this.props.showLogin()}>Login/register</div>
                                                                         </StyledLink>}
+                </div>
+                
+                <FeedbackModal showFeedbackModal={this.state.showFeedbackModal}
+                            handleCancelFeedbackModal={this.handleCancelFeedbackModal}
+                            showNotification={openNotification}>
+                </FeedbackModal>
+
+                <div className="navbar-toggle">
+                    <Dropdown overlay={menu}>
+                         <Icon type="bars" style={{ fontSize:'40px', color: '#808080', cursor: 'pointer'}}/>
+                    </Dropdown>
                 </div>
 
                <div className="navbar-right-side">
@@ -122,9 +140,9 @@ class Header extends Component {
                     </ul>
                </div>
 
-                <Dropdown overlay={this.menu} trigger={['click']}>
+                {/* <Dropdown overlay={this.menu} trigger={['click']}>
                     <Icon type="bars" style={{ fontSize:'40px', color: '#808080', cursor: 'pointer'}}/>
-                </Dropdown>
+                </Dropdown> */}
 
             </div>
          );

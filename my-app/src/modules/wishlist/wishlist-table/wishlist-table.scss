@@ -1,0 +1,21 @@
+.table-accordeon {
+    display: none;
+}
+
+@media only screen and (max-width: 1024px) {
+    .table-accordeon {
+        display: block;
+
+        div {
+            span {
+                margin-right: 5px;
+            }
+
+            i {
+                margin-left: 10px;
+                color: #1890ff;
+            }
+        }
+      
+    }
+}

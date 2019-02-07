@@ -7,7 +7,7 @@ import Moment from 'react-moment';
 import { postLocationToWishlist, updateLocationToWishlist } from './apiCall';
 import defaultWishlistLocation from './defaultWishlistLocation';
 import PopUp from '../../common/pop-up/pop-up';
-import { Comment, Avatar, Form, Button, List, Input } from 'antd';
+import { Comment, Avatar, Form, Button, List, Input, Rate } from 'antd';
 import moment from 'moment';
 import './locationDetails.scss';
 
@@ -52,6 +52,7 @@ class LocationDetails extends Component {
             phone: 0,
             startLocation: "",
             endLocation: "",
+            festival: "",
             pictures: "",
             description: "",
             popup: false,
@@ -61,6 +62,7 @@ class LocationDetails extends Component {
             comments: [],
             submitting: false,
             value: '',
+            rate: 0,
         }
     }
 
@@ -76,6 +78,9 @@ class LocationDetails extends Component {
                     endLocation: data[0].endLocation,
                     pictures: data[0].pictures,
                     description: data[0].description,
+                    rate: data[0].rate,
+                    festival: data[0].festival,
+                    idOfLocation: data[0].idOfLocation
                     // comments: data[0].comments
                 })
             })
@@ -91,13 +96,35 @@ class LocationDetails extends Component {
         }
 
         this.state.pictures.length > 0 ? 
-        newWishlistLocation["pictures"] = this.state.pictures[0].base64 
+        newWishlistLocation["pictures"] = this.state.pictures
                     : newWishlistLocation["pictures"] = "";
                     newWishlistLocation["description"] = this.state.description;
         newWishlistLocation["username"] = localStorage.getItem('username');
+        newWishlistLocation["idOfLocation"] = this.state.idOfQuestion;
         newWishlistLocation["comments"] = this.state.comments;
+        newWishlistLocation["festival"] = this.state.festival;
         return newWishlistLocation;
       }
+
+    updateLocation = () => {
+        let locationToUpdate = {}
+
+        this.state.pictures.length > 0 ? 
+        locationToUpdate["pictures"] = this.state.pictures
+                    : locationToUpdate["pictures"] = "";
+        locationToUpdate["name"] = this.state.name;
+        locationToUpdate["city"] = this.state.city;
+        locationToUpdate["price"] = this.state.price;
+        locationToUpdate["festival"] = this.state.festival;
+        locationToUpdate["phone"] = this.state.phone;
+        locationToUpdate["startLocation"] = this.state.startLocation;
+        locationToUpdate["endLocation"] = this.state.endLocation;            
+        locationToUpdate["description"] = this.state.description;
+        locationToUpdate["idOfLocation"] = this.state.idOfQuestion;
+        locationToUpdate["comments"] = this.state.comments;
+        locationToUpdate["rate"] = this.state.rate;
+        return locationToUpdate;
+    }
 
 
     addToWishlist = () => {
@@ -157,8 +184,6 @@ class LocationDetails extends Component {
 
 
         }, 1000);
-
-
     }
 
     closePopup = () => {
@@ -168,8 +193,19 @@ class LocationDetails extends Component {
         })
     }
 
+    handleRateChange = (value) => {
+        this.setState({
+            rate: (this.state.rate + value) / 2,
+        }, () => {
+            const objectToUpdate = this.updateLocation();
+            updateLocationToWishlist(locations + '/' + this.state.idOfQuestion, objectToUpdate, (response) => {
+            })
+        })
+
+    }
+
     render() {
-        console.log("final data: ", this.state.comments);
+        console.log("final data: ", this.state.rate);
         return(
             <Fragment>
                  {this.state.popup  ? 
@@ -182,7 +218,7 @@ class LocationDetails extends Component {
                 <div className="big-container">
                     <div className="upper-container__details-page">
                         <div className="left-container__details-page">
-                            <Image src={this.state.pictures.length > 0 ? this.state.pictures : "/assets/no-image.png"} ></Image>
+                            <Image src={this.state.pictures.length && this.state.pictures !== undefined > 0 ? this.state.pictures : "/assets/no-image.png"} ></Image>
                             <div className="container-phone-number">
                                 <i className="fas fa-phone"></i>
                                 <div className="phone-number-block">
@@ -209,6 +245,10 @@ class LocationDetails extends Component {
                             <Moment format="MM.DD.YYYY">{this.state.startLocation}</Moment>
                             <span>  -  </span>
                             <Moment format="MM.DD.YYYY">{this.state.endLocation}</Moment>
+                            <div className="details-location">
+                               Rate this location!
+                            </div>
+                            <div> <Rate onChange={this.handleRateChange} value={this.state.rate}></Rate></div>
                         </div>
                     </div>
 
@@ -247,9 +287,9 @@ class LocationDetails extends Component {
                     </div>
                     
                     <div className="details-location-button align-right">
-                        <Button action={this.addToWishlist}
-                                title="Add to my wishlist"
-                                size="Medium"></Button>
+                        <Button type="primary"
+                                onClick={this.addToWishlist}
+                                size="Large">Add to my wishlist</Button>
                   </div>
                 </div>
 

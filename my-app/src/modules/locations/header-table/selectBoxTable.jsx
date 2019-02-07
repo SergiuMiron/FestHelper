@@ -21,7 +21,7 @@ class SelectBoxTabel extends Component {
       showItems: false
     });
     
-    const itemSelected=item.value.toString().toLowerCase().split(" ").pop();
+    const itemSelected=item.value.toString().split(" ").pop();
     const nameFilter=this.state.name;
     if( nameFilter === 'city' ){
       this.props.filterCity( nameFilter, itemSelected );

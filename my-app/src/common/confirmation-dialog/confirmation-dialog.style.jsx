@@ -54,4 +54,17 @@ export const StyledConfirmationDialog = styled.div`
     .display-none {
         display: none;
     }
+
+    @media only screen and (max-width : 768px) {
+
+        .modal-main {
+            width: 300px;
+            height: 120px;
+        }
+
+        p {
+            font-size: 10px !important;
+            margin: 40px auto 25px auto !important;
+        }
+    }
 `

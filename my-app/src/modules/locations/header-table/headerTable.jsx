@@ -3,11 +3,82 @@ import styled from 'styled-components';
 import ContainerHeader from '../../../common/container-header/container-header';
 import SelectBoxTabel from './selectBoxTable';
 import { Link } from "react-router-dom";
-import { Button } from 'antd';
+import { Button, Modal, notification } from 'antd';
+import ReactPhoneInput from 'react-phone-input-2';
+import Textarea from '../../../common/textarea/textarea';
+import { postLocation } from '../../add-a-location/apiCalls';
+import { announces } from '../../../endpoints';
+import Input from '../../add-a-location/components/input/input';
+
+const openNotification = () => {
+    notification.success({
+      message: '',
+      description: 'Your announce have been added. Thank you!',
+      placement: "topRight",
+      style: {
+        fontWeight: 600,
+        fontFamily: 'Roboto',
+      },
+    });
+  };
 
 class HeaderTable extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            loading: false,
+            visible: false,
+            description: "",
+            phone: "",
+            festival: "",
+            festivalError: "",
+        }
+    }
+
+    showModal = () => {
+        this.setState({
+          visible: true,
+        });
+    }
+
+    handleOk = () => {
+        let newAnnounce = {};
+        newAnnounce['phone'] = this.state.phone;
+        newAnnounce['description'] = this.state.description;
+        newAnnounce['username'] = localStorage.getItem('username');
+        newAnnounce['festival'] = this.state.festival;
+
+        this.setState({ loading: true });
+        setTimeout(() => {
+          postLocation(announces,newAnnounce, (response) => {
+              console.log(response);
+          })
+          this.setState({ loading: false, visible: false });
+          openNotification();
+        }, 3000);
+    }
+
+    handleCancel = () => {
+        this.setState({ visible: false });
+    }
+
+    handlePhoneNumber = (value) => {
+        this.setState({
+          phone: value
+        })
+      }
+
+    onDescriptionChange = event => {
+        const { target } = event;
+        this.setState({
+            [target.name]: target.value
+    });
+    };
 
     filterCity = ( filterDropDown, selectedItem ) => {
+        console.log(filterDropDown);
+        console.log(selectedItem)
         this.props.filterPageCity(filterDropDown, selectedItem);
     }
 
@@ -15,21 +86,60 @@ class HeaderTable extends Component {
         this.props.filterPagePrice ( filterDropDown, selectedItem );
     }
 
+    onFestivalInputChange = ({target}) => {
+        this.setState({
+            festival: target.value
+        })
+    }
+
     render () {
         return (
             <Fragment >
+                <Modal
+                    visible={this.state.visible}
+                    title="You're alone and searching for people to share an apartament with? Post an announcement!"
+                    onOk={this.handleOk}
+                    onCancel={this.handleCancel}
+                    footer={[
+                        <Button key="back" onClick={this.handleCancel}>Return</Button>,
+                        <Button key="submit" type="primary" loading={this.state.loading} onClick={this.handleOk}>
+                        Submit
+                        </Button>,
+                    ]}
+                    >
+                    <p className="section-label required">Phone number</p>
+                      <ReactPhoneInput defaultCountry={'ro'} 
+                                       value={this.state.phone}
+                                       onlyCountries={['ro']}
+                                       onChange={this.handlePhoneNumber}
+                                       disableCountryCode={true}
+                                       placeholder="Insert your phone number here"/>
+
+                    <div className="festival-input">
+                        <Input id="festival"
+                            name="Festival during this time"
+                            onChange={this.onFestivalInputChange}
+                            error={this.state.festivalError}></Input>
+                    </div>
+
+                    <p className="section-label">Description</p>
+                        <Textarea id="descriptionId" 
+                                value={this.state.description} 
+                                onChange={this.onDescriptionChange} 
+                                name="description" />
+                </Modal>
                 <ContainerHeader label="ALL LOCATIONS" className="fa fa-edit" />
                 <DivFiltering>
                     <DivBtnDropDown>
                         <DivSelectBox>
-                            <Label>Type: </Label>
+                            <Label>City: </Label>
                             <SelectBoxTabel
                             name = 'city'
                             items = {[
                                 { value: 'All', id: 1 },
-                                { value: 'Brasov', id: 2 },
-                                { value: 'Slanic-Moldova', id: 3 },
-                                { value: 'Code', id: 4 },
+                                { value: 'Cluj', id: 2 },
+                                { value: 'Brasov', id: 3 },
+                                { value: 'Constanta', id: 3 },
                             ]}
                             filterCity = { this.filterCity }
                             />
@@ -73,6 +183,11 @@ class HeaderTable extends Component {
                         </Button>
                         </Link>
                     </DivButton>
+                    <DivButton>
+                        <Button type="primary" size="large" onClick={this.showModal}>
+                                    Search for roommates?
+                        </Button>
+                    </DivButton>
                 </DivFiltering>
             </Fragment>
         )
@@ -87,6 +202,10 @@ const DivFiltering = styled.div`
     justify-content: space-between;
     align-items: baseline;
     margin-bottom: 100px;
+
+    @media only screen and (max-width: 1024px) {
+       display: block;
+    }
     `;
 const DivBtnDropDown = styled.div`
     align-items: baseline;
@@ -98,6 +217,10 @@ const DivButton = styled.div`
     display: flex;
     align-items: baseline;
     margin: 0px;
+
+    @media only screen and (max-width: 1024px) {
+        margin-top: 20px;
+    }
     `;
 const Label = styled.label`
     font-size: 14px;
@@ -105,9 +228,17 @@ const Label = styled.label`
     font-weight: 500;
     padding-right: 3px;
     color: ${props => props.theme.secondaryColor};
+
+    @media only screen and (max-width: 1024px) {
+        font-size: 10px;
+    }
     `;
 const DivSelectBox = styled.div`
     display: flex;
     position: relative;
     align-items:baseline;
+
+    @media only screen and (max-width: 1024px) {
+        display: block;
+    }
     `;
