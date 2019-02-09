@@ -9,8 +9,8 @@ module.exports = function (app) {
     username: { type:String, unique: true},
     email: {type: String, unique: true},
     password: { type: String },
-  
-  
+    isPartner: { type: Boolean }
+
   }, {
     timestamps: true
   });

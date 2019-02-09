@@ -15,10 +15,7 @@ const openNotification = () => {
       message: '',
       description: 'Your announce have been added. Thank you!',
       placement: "topRight",
-      style: {
-        fontWeight: 600,
-        fontFamily: 'Roboto',
-      },
+      style: {backgroundColor: "#FFFAFA", fontFamily: 'Roboto', fontWeight: "bold"}
     });
   };
 

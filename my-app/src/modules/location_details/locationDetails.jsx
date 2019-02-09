@@ -1,13 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import { getLocations } from '../locations/apiCalls';
 import { locations,wishlist } from '../../endpoints';
-import { Grid,Col,Image,Row } from 'react-bootstrap';
+import { Image } from 'react-bootstrap';
 import Moment from 'react-moment';
-// import Button  from '../../common/button/button';
 import { postLocationToWishlist, updateLocationToWishlist } from './apiCall';
 import defaultWishlistLocation from './defaultWishlistLocation';
 import PopUp from '../../common/pop-up/pop-up';
-import { Comment, Avatar, Form, Button, List, Input, Rate } from 'antd';
+import { Comment, Avatar, Form, Button, List, Input, Rate, notification, Icon } from 'antd';
 import moment from 'moment';
 import './locationDetails.scss';
 
@@ -40,6 +39,14 @@ onChange, onSubmit, submitting, value,
     </Form.Item>
 </div>
 );
+
+const openNotificationWithIcon = (type) => {
+    notification[type]({
+      message: 'Notification Title',
+      description: 'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+      style: {backgroundColor: "#FFFAFA", fontFamily: 'Roboto', fontWeight: "bold"}
+    });
+  };
 
 class LocationDetails extends Component {
     constructor(props) {
@@ -197,6 +204,7 @@ class LocationDetails extends Component {
         this.setState({
             rate: (this.state.rate + value) / 2,
         }, () => {
+            openNotificationWithIcon('success');
             const objectToUpdate = this.updateLocation();
             updateLocationToWishlist(locations + '/' + this.state.idOfQuestion, objectToUpdate, (response) => {
             })
@@ -289,7 +297,7 @@ class LocationDetails extends Component {
                     <div className="details-location-button align-right">
                         <Button type="primary"
                                 onClick={this.addToWishlist}
-                                size="Large">Add to my wishlist</Button>
+                                size="large">Add to my wishlist</Button>
                   </div>
                 </div>
 

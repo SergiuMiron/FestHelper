@@ -69,7 +69,6 @@ class Announces extends Component{
     }
 
     showModal = (index) => {
-        console.log(index)
         this.setState({
             show: true,
             index: index

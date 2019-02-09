@@ -280,6 +280,7 @@ class RegisterBox extends React.Component {
       username: "",
       email: "",
       password: "",
+      isPartner: false
     };
   }
 

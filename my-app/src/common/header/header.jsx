@@ -6,6 +6,7 @@ import { ConfirmationDialog } from '../confirmation-dialog/confirmation-dialog';
 import "./header.scss";
 import { Menu, Dropdown, Icon, Avatar,notification } from 'antd';
 import FeedbackModal from '../feedback-modal/feedback-modal';
+import ManageUsersModal from '../manage-users-modal/manage-users-modal';
 
 const navbarItems = [
     { href: "/locations", text: "Locations" },
@@ -24,6 +25,7 @@ const menu = (
     <Menu.Item ><a href="/locations">Locations</a></Menu.Item>
     <Menu.Item ><a href="/add-a-location">New Location</a></Menu.Item>
     <Menu.Item><a href="/wishlist">Wishlist</a></Menu.Item>
+    <Menu.Item><a href="/announces">Announces</a></Menu.Item>
 </Menu>
 );
 
@@ -40,10 +42,7 @@ const openNotification = () => {
       message: '',
       description: 'Succesfully sent. Thank you for your feedback!',
       placement: "bottomRight",
-      style: {
-        fontWeight: 600,
-        fontFamily: 'Roboto',
-      },
+      style: {backgroundColor: "#FFFAFA", fontFamily: 'Roboto', fontWeight: "bold"}
     });
   };
   
@@ -54,14 +53,22 @@ class Header extends Component {
             username: localStorage.getItem('username') || "",
             showConfirmationDialog: false,
             showFeedbackModal: false,
+            showManageUsersModal: false,
          }
     }
 
     menu = (
         <Menu onClick={() => this.showFeedbackModal()}>
-          <Menu.Item key="1">Send your feedback here</Menu.Item>
+          <Menu.SubMenu title="Send your feedback here" onTitleClick={() => this.showFeedbackModal()}></Menu.SubMenu>
+          <Menu.SubMenu title="Manage users" onTitleClick={() => this.showManageUsersModal()}></Menu.SubMenu>
         </Menu>
     );
+
+    showManageUsersModal = () => {
+        this.setState({
+            showManageUsersModal: true
+        })
+    }
 
     showFeedbackModal = () => {
         this.setState({
@@ -71,6 +78,12 @@ class Header extends Component {
 
     handleCancelFeedbackModal = () => {
         this.setState({ showFeedbackModal: false });
+    }
+
+    handleCancelManageUsersModal = () => {
+        this.setState({
+            showManageUsersModal: false
+        })
     }
 
     logOut = () => {
@@ -126,6 +139,11 @@ class Header extends Component {
                             showNotification={openNotification}>
                 </FeedbackModal>
 
+                <ManageUsersModal showManageUsersModal={this.state.showManageUsersModal}
+                            handleCancelManageUsersModal={this.handleCancelManageUsersModal}
+                            showNotification={openNotification}>
+                </ManageUsersModal>
+
                 <div className="navbar-toggle">
                     <Dropdown overlay={menu}>
                          <Icon type="bars" style={{ fontSize:'40px', color: '#808080', cursor: 'pointer'}}/>
@@ -140,9 +158,9 @@ class Header extends Component {
                     </ul>
                </div>
 
-                {/* <Dropdown overlay={this.menu} trigger={['click']}>
+                <Dropdown overlay={this.menu} trigger={['click']}>
                     <Icon type="bars" style={{ fontSize:'40px', color: '#808080', cursor: 'pointer'}}/>
-                </Dropdown> */}
+                </Dropdown>
 
             </div>
          );
