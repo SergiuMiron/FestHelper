@@ -115,7 +115,8 @@ class Table extends Component {
                                         <Link to ={"/location-details/"+row._id}>
                                         <i className="fas fa-pencil-alt"></i>
                                         </Link>
-                                        <i className="fas fa-trash" onClick={() => this.showModal(index)} ></i>
+                                        {localStorage.getItem("username") == "admin" ?  <i className="fas fa-trash" onClick={() => this.showModal(index)} ></i>
+                                                                                        : null }
                                     </Td>
                                 </tr>
                             )

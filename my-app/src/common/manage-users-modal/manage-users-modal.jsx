@@ -3,6 +3,7 @@ import { Modal, Table, Divider,Icon, notification } from 'antd';
 import { getLocations } from '../../modules/locations/apiCalls';
 import { users } from '../../endpoints';
 import { update } from './apiCall';
+import { ConfirmationDialog } from '../confirmation-dialog/confirmation-dialog';
 import './manage-users-modal.scss';
 
 const { Column } = Table;
@@ -23,6 +24,7 @@ class ManageUsersModal extends Component {
             users: [],
             index: 0,
             isPartner: true,
+            show: false,
         }
     }
 
@@ -33,17 +35,28 @@ class ManageUsersModal extends Component {
             })
         })
     }
+    showModal = (index) => {
+        console.log("here", index)
+        this.setState({
+            show: true,
+            index: index
+        });
+    };
+
+    hideModal = () => {
+        this.setState({ show: false });
+    };
 
 
-    makePartner = (index) => {
+    makePartner = () => {
         openNotification('success');
         this.setState({
-            index: index,
-            isPartner: true
+            isPartner: true,
+            show: false
         }, () => {
             console.log(this.state)
             update(users + '/' + this.state.users[this.state.index]._id, this.state, (response) => {
-                console.log(response)
+                sessionStorage.setItem("isPartner", "true");
             })
         })
 
@@ -54,8 +67,8 @@ class ManageUsersModal extends Component {
         this.state.users.map((row, index) => (
             tabelUsers.push({
                 key: index,
-                username: row.username,
-                email: row.email,
+                username: row.email,
+                email: row.username,
             })
         ))
         return (
@@ -65,6 +78,13 @@ class ManageUsersModal extends Component {
                 onOk={this.props.handleCancelManageUsersModal}
                 onCancel={this.props.handleCancelManageUsersModal}
                 >
+                 <ConfirmationDialog
+                    message="Are you sure you want to make this user a partner?"
+                    show={this.state.show}
+                    handleClose={this.hideModal}
+                    handleAction={this.makePartner}
+                    rightButtonTitle="YES">
+                </ConfirmationDialog>
                 <Table dataSource={tabelUsers} pagination={{ pageSize: 10 }}>
                     <Column title="Username" dataIndex="username"></Column>
                     <Column title="Email" dataIndex="email"></Column>
@@ -73,7 +93,7 @@ class ManageUsersModal extends Component {
                     key="action"
                     render={(text, tabelUsers) => (
                         <span>
-                        <i className="fas fa-user" onClick={() => this.makePartner(tabelUsers.key)} ></i>
+                        <i className="fas fa-user" onClick={() => this.showModal(tabelUsers.key)} ></i>
                         <Divider type="vertical" />
                         <a href="javascript:;">Make a partner</a>
                         </span>

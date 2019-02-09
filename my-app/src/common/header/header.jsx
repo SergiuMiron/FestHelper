@@ -8,14 +8,6 @@ import { Menu, Dropdown, Icon, Avatar,notification } from 'antd';
 import FeedbackModal from '../feedback-modal/feedback-modal';
 import ManageUsersModal from '../manage-users-modal/manage-users-modal';
 
-const navbarItems = [
-    { href: "/locations", text: "Locations" },
-    { href: "/add-a-location", text: "New Location" },
-    { href: "/wishlist", text: "My wishlist" },
-    { href: "/announces", text: "Announces"},
-    // { href: "/home", text: "Page4" }
-  ];
-
 const onClick = ({ key }) => {
     return <Redirect to='/add-a-location'></Redirect>
 };
@@ -58,9 +50,9 @@ class Header extends Component {
     }
 
     menu = (
-        <Menu onClick={() => this.showFeedbackModal()}>
+        <Menu>
           <Menu.SubMenu title="Send your feedback here" onTitleClick={() => this.showFeedbackModal()}></Menu.SubMenu>
-          <Menu.SubMenu title="Manage users" onTitleClick={() => this.showManageUsersModal()}></Menu.SubMenu>
+          {localStorage.getItem("username") == "admin" ? <Menu.SubMenu title="Manage users" onTitleClick={() => this.showManageUsersModal()}></Menu.SubMenu> : null}  
         </Menu>
     );
 
@@ -89,6 +81,7 @@ class Header extends Component {
     logOut = () => {
         localStorage.setItem( 'isLoggedIn', false )
         localStorage.setItem( 'username', "" )
+        sessionStorage.setItem ( 'isPartner', "")
         window.location.reload();
     }
 
@@ -103,6 +96,23 @@ class Header extends Component {
     };
 
     render() { 
+        var navbarItems = [];
+
+        localStorage.getItem("username") !== "" && sessionStorage.getItem("isPartner") === "true" ?
+            navbarItems = [
+                        { href: "/locations", text: "Locations" },
+                        { href: "/add-a-location", text: "New Location" },
+                        { href: "/wishlist", text: "My wishlist" },
+                        { href: "/announces", text: "Announces"},]
+            : localStorage.getItem("username") !== "" ?
+                navbarItems = [
+                    { href: "/locations", text: "Locations" },
+                    { href: "/wishlist", text: "My wishlist" },
+                    { href: "/announces", text: "Announces"},]
+                : 
+                navbarItems = [
+                    { href: "/locations", text: "Locations" },
+                    { href: "/announces", text: "Announces"},]
 
         return ( 
             <div className="navbar">

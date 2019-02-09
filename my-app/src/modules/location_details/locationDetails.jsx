@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { Redirect } from 'react-router-dom';
 import { getLocations } from '../locations/apiCalls';
 import { locations,wishlist } from '../../endpoints';
 import { Image } from 'react-bootstrap';
@@ -6,7 +7,7 @@ import Moment from 'react-moment';
 import { postLocationToWishlist, updateLocationToWishlist } from './apiCall';
 import defaultWishlistLocation from './defaultWishlistLocation';
 import PopUp from '../../common/pop-up/pop-up';
-import { Comment, Avatar, Form, Button, List, Input, Rate, notification, Icon } from 'antd';
+import { Comment, Avatar, Form, Button, List, Input, Rate, notification, Icon, Spin } from 'antd';
 import moment from 'moment';
 import './locationDetails.scss';
 
@@ -32,8 +33,7 @@ onChange, onSubmit, submitting, value,
         htmlType="submit"
         loading={submitting}
         onClick={onSubmit}
-        type="primary"
-    >
+        type="primary">
         Add Comment
     </Button>
     </Form.Item>
@@ -42,11 +42,13 @@ onChange, onSubmit, submitting, value,
 
 const openNotificationWithIcon = (type) => {
     notification[type]({
-      message: 'Notification Title',
-      description: 'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+      message: 'Thank you for rating this location!',
+      description: '',
       style: {backgroundColor: "#FFFAFA", fontFamily: 'Roboto', fontWeight: "bold"}
     });
   };
+
+  const antIcon = <Icon type="loading" style={{ fontSize: 50, }} spin />;
 
 class LocationDetails extends Component {
     constructor(props) {
@@ -70,6 +72,8 @@ class LocationDetails extends Component {
             submitting: false,
             value: '',
             rate: 0,
+            redirect: false,
+            loading: true,
         }
     }
 
@@ -92,6 +96,14 @@ class LocationDetails extends Component {
                 })
             })
         }
+
+        setTimeout(
+            function() {
+                this.setState({loading: false});
+            }
+            .bind(this),
+            1000
+        );
     }
 
     createWishlistObject = () => {
@@ -149,9 +161,16 @@ class LocationDetails extends Component {
            })
 
            this.state.actionResult === true ? 
-              this.setState({ messageForPopup: "Your location have been aded to the wishlist" })
+              this.setState({ messageForPopup: "Your location have been added to the wishlist" })
               : this.setState({ messageForPopup: "Your location have not been added to the wishlist" })
        })
+
+       setTimeout(
+        function() {
+            this.setState({redirect: true}); }
+        .bind(this),
+        1500
+    );
        
     }
 
@@ -209,12 +228,25 @@ class LocationDetails extends Component {
             updateLocationToWishlist(locations + '/' + this.state.idOfQuestion, objectToUpdate, (response) => {
             })
         })
-
     }
+
+    renderRedirect = () => {
+        if (this.state.redirect) {
+          return <Redirect to='/wishlist' />
+        }
+      }
 
     render() {
         console.log("final data: ", this.state.rate);
         return(
+            this.state.loading ? 
+                <div className="spinner">
+                    <Spin indicator={antIcon}
+                        size="large"
+                        spinning={this.state.loading}
+                        tip="Loading..."
+                        wrapperClassName="spinner"></Spin>
+                </div> :
             <Fragment>
                  {this.state.popup  ? 
                <PopUp 
@@ -293,7 +325,7 @@ class LocationDetails extends Component {
                             )}
                             />
                     </div>
-                    
+                    {this.renderRedirect()}
                     <div className="details-location-button align-right">
                         <Button type="primary"
                                 onClick={this.addToWishlist}

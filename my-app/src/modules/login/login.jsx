@@ -1,6 +1,6 @@
 import React from "react";
 import FadeTransition from "./transition/transition";
-import { post } from './apiCalls';
+import { post, get } from './apiCalls';
 import { users } from '../../endpoints';
 import { Redirect } from 'react-router-dom';
 import "./login.scss";
@@ -74,6 +74,7 @@ class LoginBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      usersFromDatabase: [],
       errors: [],
       username: "",
       password: "",
@@ -148,6 +149,9 @@ class LoginBox extends React.Component {
           })
           .then(user => {
             feathersClient.set('user', user);
+            console.log("ce cacat", typeof(false))
+            user.isPartner === false ? sessionStorage.setItem( "isPartner", "false")
+                                      : sessionStorage.setItem( "isPartner", "true")
             resolve();
             console.log('User', feathersClient.get('user'));
           })
@@ -160,9 +164,16 @@ class LoginBox extends React.Component {
 
       promise.then(function() {
         if ( JSON.parse(sessionStorage.getItem("loginError")) === false ) {
+          console.log("data", self.state.username)
+                // get(users + "?email=" + self.state.username, data => {
+                //   this.setState({
+                //     usersFromDatabase: data
+                //   })
+                // })
                 self.clearValidationErr("username");
                 localStorage.setItem( 'isLoggedIn', true )
                 localStorage.setItem('username', self.state.username)
+                // localStorage.setItem( 'isPartner', self.state.usersFromDatabase.isPartner)
                 self.hideLogin();
                 self.setState({
                   redirectToHome: true
@@ -351,7 +362,8 @@ class RegisterBox extends React.Component {
     post(users, this.state, (response) => {
       console.log("response", response)
         if(response.status == 201) {
-          localStorage.setItem( 'username', this.state.username);
+          localStorage.setItem( 'username', this.state.email);
+          sessionStorage.setItem('isPartner', this.state.isPartner);
         this.props.hideLogin();
         this.setState({
           redirectToHome: true,
@@ -413,7 +425,7 @@ class RegisterBox extends React.Component {
               name="username"
               className="login-input"
               placeholder="Username"
-              onChange={this.onUsernameChange}/>
+              onChange={this.onEmailChange}/>
             <small className="danger-error">{usernameErr
                 ? usernameErr
                 : ""}</small>
@@ -426,7 +438,7 @@ class RegisterBox extends React.Component {
               name="email"
               className="login-input"
               placeholder="Email"
-              onChange={this.onEmailChange}/>
+              onChange={this.onUsernameChange}/>
             <small className="danger-error">{emailErr
                 ? emailErr
                 : ""}</small>

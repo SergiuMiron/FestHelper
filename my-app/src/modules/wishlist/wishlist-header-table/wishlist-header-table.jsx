@@ -62,49 +62,34 @@ class WishlistHeaderTable extends Component {
                 <DivFiltering>
                     <DivBtnDropDown>
                         <DivSelectBox>
-                            <Label>Type: </Label>
+                            <Label>City: </Label>
                             <WishlistSelectBoxTabel
                             name = 'city'
                             items = {[
                                 { value: 'All', id: 1 },
-                                { value: 'Brasov', id: 2 },
-                                { value: 'Slanic-Moldova', id: 3 },
-                                { value: 'Code', id: 4 },
+                                { value: 'Cluj', id: 2 },
+                                { value: 'Iasi', id: 3 },
+                                { value: 'Constanta', id: 4 },
+                                { value: 'Bucuresti', id: 5 },
                             ]}
                             filterCity = { this.filterCity }
                             />
                         </DivSelectBox>
                         <DivSelectBox>
-                            <Label>Discipline:</Label>
+                            <Label>Festival:</Label>
                             <WishlistSelectBoxTabel
-                            name = 'price'
+                            name = 'festival'
                             items = {[
                                 { value: 'All', id: 5 },
-                                { value: 900, id: 6 },
-                                { value: 250, id: 7 },
-                                { value: 'Ui', id: 8 },
-                                { value: 'Am', id: 9 },
-                                { value: 'Testing', id: 10 },
-                                { value: 'Android', id: 11 },
-                                { value: 'Ios', id: 12 },
+                                { value: 'Untold', id: 6 },
+                                { value: 'Neversea', id: 7 },
+                                { value: 'Summer Well', id: 8 },
+                                { value: 'Electric Castle', id: 9 },
+                                { value: 'Sunwaves', id: 10 },
                             ]}
                             filterPrice = { this.filterPrice }
                             />
                         </DivSelectBox>
-                        <DivSelectBox>
-                            <Label>Difficulty:</Label>
-                            <WishlistSelectBoxTabel
-                            name = 'difficulty'
-                            items = {[
-                                { value: 'All', id: 13 },
-                                { value: 'Easy', id: 14 },
-                                { value: 'Medium', id: 15 },
-                                { value: 'Hard', id: 16 },
-                            ]}
-                            filterDifficulty = { this.filterDifficulty }
-                            />
-                        </DivSelectBox>
-                        
                     </DivBtnDropDown>
                 </DivFiltering>
             </Fragment>

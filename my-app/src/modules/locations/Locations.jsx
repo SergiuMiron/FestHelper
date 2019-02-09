@@ -32,7 +32,7 @@ class Locations extends Component {
         super(props);
         this.state = {  
             body: [],
-            maxLocationsPerPage: 3,
+            maxLocationsPerPage: 10,
             currentPage: 1,
             totalPages: '',
             filterByCity:  '',

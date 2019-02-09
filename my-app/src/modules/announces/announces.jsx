@@ -155,7 +155,7 @@ class Announces extends Component{
                               delay={3000}></PopUp> 
                       : null }
                 <ConfirmationDialog
-                    message="ARE YOU SURE YOU WANT TO DELETE THIS LOCATION?"
+                    message="ARE YOU SURE YOU WANT TO DELETE THIS ANNOUNCE?"
                     show={this.state.show}
                     handleClose={this.hideModal}
                     handleAction={this.deleteAnnounce}
@@ -165,17 +165,19 @@ class Announces extends Component{
                 <Column title="Author" dataIndex="author"></Column>
                 <Column title="Phone" dataIndex="phone"></Column>
                 <Column title="Festival interested in" dataIndex="festival"></Column>
-                <Column
-                    title="Action"
-                    key="action"
-                    render={(text, something) => (
-                        <span>
-                       <i className="fas fa-trash" onClick={() => this.showModal(something.key)} ></i>
-                        <Divider type="vertical" />
-                        <a href="javascript:;">Delete</a>
-                        </span>
-                    )}
-                 />
+                {localStorage.getItem("username") === "admin" ? 
+                     <Column
+                     title="Action"
+                     key="action"
+                     render={(text, something) => (
+                         <span>
+                        <i className="fas fa-trash" onClick={() => this.showModal(something.key)} ></i>
+                         <Divider type="vertical" />
+                         <a href="javascript:;">Delete</a>
+                         </span>
+                     )}
+                  /> : null
+            }
                 </Table>
             </div>
         )

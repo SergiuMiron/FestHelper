@@ -8,7 +8,7 @@ module.exports = function (app) {
   const wishlist = new Schema({
     idOfLocation: { type: String },
     username: { type: String },
-    name: { type: String, unique: true, required: true, minLength: 1, maxLength: 120 },
+    name: { type: String, required: true, required: true, minLength: 1, maxLength: 120 },
     city: { type: String, required: true, minLength: 1, maxLength: 120 },
     price: { type: Number, required: true, minLength: 1, maxLength: 120 },
     phone: { type: Number, minLength: 1, maxLength: 120 },

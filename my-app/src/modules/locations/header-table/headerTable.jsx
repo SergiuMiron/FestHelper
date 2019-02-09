@@ -74,12 +74,11 @@ class HeaderTable extends Component {
     };
 
     filterCity = ( filterDropDown, selectedItem ) => {
-        console.log(filterDropDown);
-        console.log(selectedItem)
         this.props.filterPageCity(filterDropDown, selectedItem);
     }
 
     filterPrice = ( filterDropDown, selectedItem ) => {
+        console.log(filterDropDown, selectedItem)
         this.props.filterPagePrice ( filterDropDown, selectedItem );
     }
 
@@ -135,30 +134,29 @@ class HeaderTable extends Component {
                             items = {[
                                 { value: 'All', id: 1 },
                                 { value: 'Cluj', id: 2 },
-                                { value: 'Brasov', id: 3 },
-                                { value: 'Constanta', id: 3 },
+                                { value: 'Iasi', id: 3 },
+                                { value: 'Constanta', id: 4 },
+                                { value: 'Bucuresti', id: 5 },
                             ]}
                             filterCity = { this.filterCity }
                             />
                         </DivSelectBox>
                         <DivSelectBox>
-                            <Label>Discipline:</Label>
+                            <Label>Festival:</Label>
                             <SelectBoxTabel
-                            name = 'price'
+                            name = 'festival'
                             items = {[
                                 { value: 'All', id: 5 },
-                                { value: 900, id: 6 },
-                                { value: 250, id: 7 },
-                                { value: 'Ui', id: 8 },
-                                { value: 'Am', id: 9 },
-                                { value: 'Testing', id: 10 },
-                                { value: 'Android', id: 11 },
-                                { value: 'Ios', id: 12 },
+                                { value: 'Untold', id: 6 },
+                                { value: 'Neversea', id: 7 },
+                                { value: 'Summer Well', id: 8 },
+                                { value: 'Electric Castle', id: 9 },
+                                { value: 'Sunwaves', id: 10 },
                             ]}
                             filterPrice = { this.filterPrice }
                             />
                         </DivSelectBox>
-                        <DivSelectBox>
+                        {/* <DivSelectBox>
                             <Label>Difficulty:</Label>
                             <SelectBoxTabel
                             name = 'difficulty'
@@ -170,21 +168,27 @@ class HeaderTable extends Component {
                             ]}
                             filterDifficulty = { this.filterDifficulty }
                             />
-                        </DivSelectBox>
+                        </DivSelectBox> */}
                         
                     </DivBtnDropDown>
-                    <DivButton >
-                        <Link to ={"/add-a-location"}>
-                        <Button type="primary" size="large">
-                                    Add a new location!
-                        </Button>
-                        </Link>
-                    </DivButton>
-                    <DivButton>
-                        <Button type="primary" size="large" onClick={this.showModal}>
-                                    Search for roommates?
-                        </Button>
-                    </DivButton>
+                    {localStorage.getItem("username") !== "" && sessionStorage.getItem("isPartner") === "true" ?
+                    <Fragment>
+                        <DivButton >
+                            <Link to ={"/add-a-location"}>
+                            <Button type="primary" size="large">
+                                        Add a new location!
+                            </Button>
+                            </Link>
+                            </DivButton>
+                            <DivButton>
+                                <Button type="primary" size="large" onClick={this.showModal}>
+                                            Search for roommates?
+                                </Button>
+                        </DivButton>
+                    </Fragment>
+                    : null
+                    }
+                    
                 </DivFiltering>
             </Fragment>
         )

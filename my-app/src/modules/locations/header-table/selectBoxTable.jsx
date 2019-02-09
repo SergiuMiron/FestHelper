@@ -26,7 +26,7 @@ class SelectBoxTabel extends Component {
     if( nameFilter === 'city' ){
       this.props.filterCity( nameFilter, itemSelected );
     }
-    else if(nameFilter === 'price' ){
+    else if(nameFilter === 'festival' ){
       this.props.filterPrice( nameFilter, itemSelected );
     }
     

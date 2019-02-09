@@ -11,3 +11,11 @@ export const post = (url, data, callback = () => {}) => {
       })
       .catch(err => callback(err));
   };
+
+  export const get = (url, callback) => {
+    fetch(url, {
+        method: 'GET'
+    }).then(res => res.json())
+    .then(res => callback(res.data))
+    .catch(err => callback(err));
+}
