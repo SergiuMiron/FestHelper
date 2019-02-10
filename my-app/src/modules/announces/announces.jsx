@@ -97,8 +97,6 @@ class Announces extends Component{
             left: 0,
             behavior: 'smooth'
         })
-        console.log("first", this.state.index)
-        console.log("1", this.state.announces[this.state.index])
         deleteLocation(announces, this.state.announces[this.state.index]._id, (response) => {
             this.setState({
                 actionResult: response.ok,
@@ -164,7 +162,7 @@ class Announces extends Component{
                 <Table expandedRowRender={record => <p style={{ margin: 0 }}>{record.description}</p>} dataSource={something}>
                 <Column title="Author" dataIndex="author"></Column>
                 <Column title="Phone" dataIndex="phone"></Column>
-                <Column title="Festival interested in" dataIndex="festival"></Column>
+                {/* <Column title="Festival interested in" dataIndex="festival"></Column> */}
                 {localStorage.getItem("username") === "admin" ? 
                      <Column
                      title="Action"

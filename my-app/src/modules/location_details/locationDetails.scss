@@ -1,3 +1,27 @@
+@media only screen and (max-width : 768px) {
+    .big-container {
+        width: 80%;
+        margin: 47px auto 180px auto;
+    
+        .upper-container__details-page {
+            display: block !important;
+            
+    
+            .left-container__details-page {
+                display: block;
+        
+                img {
+                    width: 45vh !important;
+                    height: 40vh !important;
+                    padding:1px;
+                    border:1px solid #021a40;
+                    background-color:darkgrey;
+                }
+            }
+        }
+    }
+}
+
 .spinner {
     margin-left: 50%;
     /* margin-right: 50%; */
@@ -5,8 +29,9 @@
 }
 
 .big-container {
-    width: 1020px;
+    width: 80%;
     margin: 47px auto 180px auto;
+    // margin: auto;
 
     .upper-container__details-page {
         display: flex;

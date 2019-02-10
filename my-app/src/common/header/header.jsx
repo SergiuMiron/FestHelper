@@ -12,15 +12,6 @@ const onClick = ({ key }) => {
     return <Redirect to='/add-a-location'></Redirect>
 };
 
-const menu = (
-<Menu onClick={onClick}>
-    <Menu.Item ><a href="/locations">Locations</a></Menu.Item>
-    <Menu.Item ><a href="/add-a-location">New Location</a></Menu.Item>
-    <Menu.Item><a href="/wishlist">Wishlist</a></Menu.Item>
-    <Menu.Item><a href="/announces">Announces</a></Menu.Item>
-</Menu>
-);
-
 const StyledLink = styled(Link)`
     text-decoration: none;
 
@@ -55,6 +46,17 @@ class Header extends Component {
           {localStorage.getItem("username") == "admin" ? <Menu.SubMenu title="Manage users" onTitleClick={() => this.showManageUsersModal()}></Menu.SubMenu> : null}  
         </Menu>
     );
+
+    responsiveMenu = (
+        <Menu onClick={onClick}>
+            <Menu.Item ><a href="/locations">Locations</a></Menu.Item>
+            <Menu.Item ><a href="/add-a-location">New Location</a></Menu.Item>
+            <Menu.Item><a href="/wishlist">Wishlist</a></Menu.Item>
+            <Menu.Item><a href="/announces">Announces</a></Menu.Item>
+            <Menu.SubMenu title="Send your feedback here" onTitleClick={() => this.showFeedbackModal()}></Menu.SubMenu>
+            {localStorage.getItem("username") == "admin" ? <Menu.SubMenu title="Manage users" onTitleClick={() => this.showManageUsersModal()}></Menu.SubMenu> : null}
+        </Menu>
+        );
 
     showManageUsersModal = () => {
         this.setState({
@@ -155,7 +157,7 @@ class Header extends Component {
                 </ManageUsersModal>
 
                 <div className="navbar-toggle">
-                    <Dropdown overlay={menu}>
+                    <Dropdown overlay={this.responsiveMenu}>
                          <Icon type="bars" style={{ fontSize:'40px', color: '#808080', cursor: 'pointer'}}/>
                     </Dropdown>
                 </div>
@@ -168,9 +170,11 @@ class Header extends Component {
                     </ul>
                </div>
 
-                <Dropdown overlay={this.menu} trigger={['click']}>
-                    <Icon type="bars" style={{ fontSize:'40px', color: '#808080', cursor: 'pointer'}}/>
-                </Dropdown>
+                <div className="feedback-manage-users-menu">
+                    <Dropdown overlay={this.menu} trigger={['click']}>
+                        <Icon type="bars" style={{ fontSize:'40px', color: '#808080', cursor: 'pointer'}}/>
+                    </Dropdown>
+                </div>
 
             </div>
          );
